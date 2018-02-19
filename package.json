@@ -1,0 +1,30 @@
+{
+  "name": "@gnosis.pm/util-contracts",
+  "version": "0.1.0",
+  "description": "Utility contracts for Gnosis",
+  "main": "index.js",
+  "scripts": {
+    "test": "truffle test",
+    "truffle": "truffle"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gnosis/util-contracts.git"
+  },
+  "keywords": [
+    "Ethereum",
+    "Gnosis",
+    "Solidity",
+    "Truffle",
+    "Utility"
+  ],
+  "author": "Gnosis (https://gnosis.pm)",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/gnosis/util-contracts/issues"
+  },
+  "homepage": "https://github.com/gnosis/util-contracts#readme",
+  "devDependencies": {
+    "truffle": "^4.0.6"
+  }
+}
