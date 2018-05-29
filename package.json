@@ -7,6 +7,9 @@
     "test": "truffle test",
     "truffle": "truffle",
     "migrate": "truffle migrate",
+    "networks-extract": "node scripts/extract_network_info.js",
+    "networks-inject": "node scripts/inject_network_info.js",
+    "networks-reset": "truffle networks --clean && node scripts/inject_network_info.js",
     "networks": "truffle networks"
   },
   "repository": {
@@ -27,6 +30,7 @@
   },
   "homepage": "https://github.com/gnosis/util-contracts#readme",
   "devDependencies": {
+    "lodash": "^4.17.10",
     "truffle": "^4.1.11",
     "truffle-hdwallet-provider": "^0.0.5"
   }
