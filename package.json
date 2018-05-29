@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "rpc": "ganache-cli -d --mnemonic 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat' --defaultBalanceEther '500'",
-    "prepack": "npm run contracts",
+    "prepack": "npm run restore",
     "test": "truffle test",
     "truffle": "truffle",
     "migrate": "truffle migrate",
@@ -13,7 +13,7 @@
     "networks-inject": "node scripts/inject_network_info.js",
     "networks-reset": "truffle networks --clean && node scripts/inject_network_info.js",
     "networks": "truffle networks",
-    "contracts": "truffle compile && npm run networks-reset"
+    "restore": "truffle compile && npm run networks-reset"
   },
   "repository": {
     "type": "git",

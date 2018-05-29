@@ -10,7 +10,7 @@ yarn instll
 yarn networks
 
 # Compile and restore the network addresses
-yarn contracts
+yarn restore
 ```
 
 ## Generate a new version
