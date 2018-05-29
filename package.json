@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "truffle test",
-    "truffle": "truffle"
+    "truffle": "truffle",
+    "deploy": "truffle deploy",
+    "networks": "truffle networks"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,7 @@
   },
   "homepage": "https://github.com/gnosis/util-contracts#readme",
   "devDependencies": {
-    "truffle": "^4.0.6"
+    "truffle": "^4.0.6",
+    "truffle-hdwallet-provider": "^0.0.5"
   }
 }
