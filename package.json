@@ -6,7 +6,7 @@
   "scripts": {
     "test": "truffle test",
     "truffle": "truffle",
-    "deploy": "truffle deploy",
+    "migrate": "truffle migrate",
     "networks": "truffle networks"
   },
   "repository": {
@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/gnosis/util-contracts#readme",
   "devDependencies": {
-    "truffle": "^4.0.6",
+    "truffle": "^4.1.11",
     "truffle-hdwallet-provider": "^0.0.5"
   }
 }
