@@ -47,6 +47,12 @@ const networks = {
     network_id: '0',
     gas,
     gasPrice
+  },
+  ropsten: {
+    provider: _getProvider('https://ropsten.infura.io'),
+    network_id: '3',
+    gas,
+    gasPrice
   }
 }
 
