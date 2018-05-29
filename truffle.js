@@ -1,6 +1,6 @@
 const HDWalletProvider = require('truffle-hdwallet-provider')
 
-const DEFAULT_GAS_PRICE = 1e9
+const DEFAULT_GAS_PRICE = 25e9
 const GAS_LIMIT = 6700000
 
 // Get the mnemonic
@@ -36,7 +36,8 @@ const networks = {
     gasPrice
   },
   rinkeby: {
-    provider: _getProvider('http://node.rinkeby.gnosisdev.com:8545'),
+    //provider: _getProvider('http://node.rinkeby.gnosisdev.com:8545'),
+    provider: _getProvider('https://rinkeby.infura.io'),
     network_id: '4',
     gas,
     gasPrice
