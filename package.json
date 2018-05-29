@@ -4,13 +4,16 @@
   "description": "Utility contracts for Gnosis",
   "main": "index.js",
   "scripts": {
+    "rpc": "ganache-cli -d --mnemonic 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat' --defaultBalanceEther '500'",
+    "prepack": "npm run contracts",
     "test": "truffle test",
     "truffle": "truffle",
     "migrate": "truffle migrate",
     "networks-extract": "node scripts/extract_network_info.js",
     "networks-inject": "node scripts/inject_network_info.js",
     "networks-reset": "truffle networks --clean && node scripts/inject_network_info.js",
-    "networks": "truffle networks"
+    "networks": "truffle networks",
+    "contracts": "truffle compile && npm run networks-reset"
   },
   "repository": {
     "type": "git",
