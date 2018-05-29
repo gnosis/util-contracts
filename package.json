@@ -9,7 +9,7 @@
     "test": "truffle test",
     "truffle": "truffle",
     "migrate": "truffle migrate",
-    "networks-extract": "node scripts/extract_network_info.js",
+    "networks-extract": "truffle networks --clean && node scripts/extract_network_info.js",
     "networks-inject": "node scripts/inject_network_info.js",
     "networks-reset": "truffle networks --clean && node scripts/inject_network_info.js",
     "networks": "truffle networks",
