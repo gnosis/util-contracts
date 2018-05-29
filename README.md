@@ -4,7 +4,7 @@ Utility contracts for Gnosis
 ## Setup and show the networks
 ```bash
 # Install dependencies
-yarn instll
+yarn install
 
 # Show current network addresses
 yarn networks

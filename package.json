@@ -11,8 +11,9 @@
     "migrate": "truffle migrate",
     "networks-extract": "truffle networks --clean && node scripts/extract_network_info.js",
     "networks-inject": "node scripts/inject_network_info.js",
-    "networks-reset": "truffle networks --clean && node scripts/inject_network_info.js",
+    "networks-reset": "truffle networks --clean && npn run networks-inject",
     "networks": "truffle networks",
+    "compile": "truffle compile",
     "restore": "truffle compile && npm run networks-reset"
   },
   "repository": {
