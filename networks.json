@@ -1,26 +1,44 @@
 {
   "EtherToken": {
+    "0": {
+      "events": {},
+      "links": {},
+      "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "transactionHash": "0xb95343413e459a0f97461812111254163ae53467855c0d73e0f1e7c5b8442fa3"
+    },
+    "1": {
+      "events": {},
+      "links": {},
+      "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "transactionHash": "0xb95343413e459a0f97461812111254163ae53467855c0d73e0f1e7c5b8442fa3"
+    },
+    "3": {
+      "events": {},
+      "links": {},
+      "address": "0xc778417e063141139fce010982780140aa0cd5ab",
+      "transactionHash": "0x19ae7fb1bd96c6f623741f76573a3e97d8a863358dafb1d773a8f9ad98b424b4"
+    },
     "4": {
       "events": {},
       "links": {},
-      "address": "0xf2a9074fa7391fa4b9f558d727537f492380ad22",
-      "transactionHash": null
+      "address": "0xffb27c4ed46d7f9f6df09743c9db5fdba916aac9",
+      "transactionHash": "0xb9eabf2ac646bc201ade82ae1b329a4552bd29b1675d4268e5a4070f95c73bf6"
     }
   },
   "Math": {
     "4": {
       "events": {},
       "links": {},
-      "address": "0x4547c46dcda7eaf9b5eb8453b3c29e0c2163a3f1",
-      "transactionHash": null
+      "address": "0xc7168757a32cad0f969dfbba5c7b741355b97177",
+      "transactionHash": "0xfdec5a39d0c0ea91f0384a346b7c4c47fb724720e8dd705378c6cb4cae10aa2e"
     }
   },
   "Migrations": {
     "4": {
       "events": {},
       "links": {},
-      "address": "0xf2800f77bfe7baee4e4663ffbdf2ce98e192b863",
-      "transactionHash": "0xa8b009b412e7871fcdb092d38c0f7f8dc379c08d1758330b6bedeca0bd4b47d2"
+      "address": "0xffb27c4ed46d7f9f6df09743c9db5fdba916aac9",
+      "transactionHash": "0xb9eabf2ac646bc201ade82ae1b329a4552bd29b1675d4268e5a4070f95c73bf6"
     }
   }
 }
