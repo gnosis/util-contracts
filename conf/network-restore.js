@@ -6,6 +6,6 @@ const NETWORKS_FILE_PATH = path.join(__dirname, '..', 'networks.json')
 module.exports = {
   buildDir: BUILD_DIR,
   buildDirDependencies: [],
-  networksFile: NETWORKS_FILE_PATH,
-  extraxtNetworkFilter: null
+  networksFile: NETWORKS_FILE_PATH
+  // extracttNetworkFilter: ({ name }) => (name === 'MyContract')
 }
