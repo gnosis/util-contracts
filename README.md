@@ -6,11 +6,11 @@ Utility contracts for Gnosis
 # Install dependencies
 yarn install
 
-# Show current network addresses
-yarn networks
-
 # Compile and restore the network addresses
 yarn restore
+
+# Show current network addresses
+yarn networks
 ```
 
 ## Generate a new version

@@ -1,5 +1,5 @@
 const networkUtils = require('./util/networkUtils')
-const DEFAULT_CONF_FILE = '../conf/network-restore'
+const DEFAULT_CONF_FILE = './conf/network-restore'
 
 async function inject () {
   const confFile = process.env.CONF_FILE || DEFAULT_CONF_FILE

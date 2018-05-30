@@ -1,5 +1,5 @@
 const networkUtils = require('./util/networkUtils')
-const DEFAULT_CONF_FILE = '../conf/network-restore'
+const DEFAULT_CONF_FILE = './conf/network-restore'
 
 // Do not extract the networks for the Migrations contract
 const DEFAULT_FILTER_DEPENDENCIES = ({ name }) => {
