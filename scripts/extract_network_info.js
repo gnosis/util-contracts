@@ -1,10 +1,13 @@
 const networkUtils = require('./util/networkUtils')
 const conf = require('../conf/network-restore')
 
+// Do not extract the networks for the Migrations contract
+const DEFAULT_FILTER_DEPENDENCIES = name => (name === 'Migrations')
+
 async function extract () {
   // Get the network info
   const networkInfo = await _getNetworkInfo(conf)
-  const networksFile = conf.networksFile
+  let networksFile = conf.networksFile
   if (networkInfo.length > 0) {
     // Write the network.json file
     const contractNames = networkInfo.map(contract => contract.name)
@@ -19,9 +22,22 @@ async function extract () {
 }
 
 async function _getNetworkInfo (conf) {
+  // Main network info
+  const networkInfoProject = networkUtils.getNetworkInfo(conf.buildDir)
+
+  // Dependencies network info
+  let networkInfoDependencies = await _getNetworkInfoForDependencies(conf)
+
+  // Filter: Useful, for example to remove the Migrations addresses
+  const filterDependencies = conf.extraxtNetworkFilter || DEFAULT_FILTER_DEPENDENCIES
+  networkInfoDependencies = networkInfoDependencies.filter(conf.filterDependenciesContracts)
+
+  return Object.assign(networkInfoDependencies, networkInfoProject)
+}
+
+async function _getNetworkInfoForDependencies (conf) {
   // Extract the network info from all of the build paths
-  const buildDirs = [ conf.buildDir, ...conf.buildDirDependencies ]
-  const networkInfosPromises = buildDirs.map(async buildDir => {
+  const networkInfosPromises = conf.buildDirDependencies.map(async buildDir => {
     const networkInfo = await networkUtils.getNetworkInfo(buildDir)
     return networkUtils.toNetworkObject(networkInfo)
   })
@@ -38,5 +54,6 @@ async function _getNetworkInfo (conf) {
     networks: networkInfoObject[name]
   }))
 }
+
 
 extract().catch(console.error)
