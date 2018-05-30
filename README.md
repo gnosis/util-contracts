@@ -24,6 +24,9 @@ MNEMONIC="your mnemonic here..." yarn migrate --network rinkeby
 yarn networks --clean
 yarn networks-extract
 
+# Verify the contract in Etherscan
+# Folow the steps in "Verify contract"
+
 # Commit the network file
 git add network.json
 git commit -m 'Update the networks file'
@@ -41,3 +44,17 @@ npm publish --access=public
 git checkout develop
 git merge vX.Y.X
 ```
+
+## Verify contract
+Flatten the smart contract:
+```bash
+npx truffle-flattener contracts/<contract-name>.sol > build/<contract-name>-EtherScan.sol
+```
+
+Go to Etherscan validation page:
+* Go to[https://rinkeby.etherscan.io/verifyContract?a=]()
+* Fill the information:
+  * Use `build/TokenGNO-<contract-name>.sol`
+  * Set the exact compiler version used for the compilation i.e. `v0.4.24+commit.e67f0147`
+  * Optimization: `No`
+* Press validate
