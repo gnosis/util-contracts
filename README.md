@@ -21,6 +21,7 @@ yarn networks
 MNEMONIC="your mnemonic here..." yarn migrate --network rinkeby
 
 # Extract the network file
+yarn networks --clean
 yarn networks-extract
 
 # Commit the network file
