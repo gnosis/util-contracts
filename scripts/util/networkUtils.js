@@ -5,7 +5,7 @@ async function getNetworkInfo (buildPath) {
   // Get contracts from the build path
   const contracts = await _getContracts(buildPath)
 
-  contracts
+  return contracts
     // Take just the contracts with network information
     .filter(contract => {
       const networkIds = Object.keys(contract.networks)
@@ -53,12 +53,16 @@ async function updateBuiltContract (buildPath, networkFilePath) {
 }
 
 function writeNetworksJson (networkInfo, networkFilePath) {
-  const networkObject = networkInfo.reduce((acc, contract) => {
+  const networkObject = toNetworkObject(networkInfo)
+  const jsonContent = JSON.stringify(networkObject, null, 2) + '\n'
+  fs.writeFileSync(networkFilePath, jsonContent)    
+}
+
+function toNetworkObject (networkInfo) {
+  return networkInfo.reduce((acc, contract) => {
     acc[contract.name] = contract.networks
     return acc
   }, {})
-  const jsonContent = JSON.stringify(networkObject, null, 2) + '\n'
-  fs.writeFileSync(networkFilePath, jsonContent)    
 }
 
 async function _getContracts (buildPath) {
@@ -78,5 +82,6 @@ async function _getContracts (buildPath) {
 module.exports = {
   getNetworkInfo,
   writeNetworksJson,
-  updateBuiltContract
+  updateBuiltContract,
+  toNetworkObject
 }

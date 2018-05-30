@@ -1,12 +1,11 @@
 const networkUtils = require('./util/networkUtils')
-const path = require('path')
-
-const BUILD_DIR = path.join(__dirname, '..', 'build', 'contracts')
-const NETWORKS_FILE_PATH = path.join(__dirname, '..', 'networks.json')
+const conf = require('../conf/network-restore')
 
 async function inject () {
-  console.log(`Inject networks from ${NETWORKS_FILE_PATH} into built contracts`)
-  await networkUtils.updateBuiltContract(BUILD_DIR, NETWORKS_FILE_PATH)
+  const { networksFile, buildDir } = conf
+
+  console.log(`Inject networks from ${networksFile} into built contracts`)
+  await networkUtils.updateBuiltContract(buildDir, networksFile)
   console.log('Success! All networks were injected into the built contracts')
 }
 
