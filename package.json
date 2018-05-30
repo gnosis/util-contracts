@@ -1,11 +1,20 @@
 {
   "name": "@gnosis.pm/util-contracts",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "description": "Utility contracts for Gnosis",
   "main": "index.js",
   "scripts": {
+    "rpc": "ganache-cli -d --mnemonic 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat' --defaultBalanceEther '500'",
+    "prepack": "npm run restore",
     "test": "truffle test",
-    "truffle": "truffle"
+    "truffle": "truffle",
+    "migrate": "truffle migrate",
+    "networks-extract": "truffle networks --clean && node scripts/extract_network_info.js",
+    "networks-inject": "node scripts/inject_network_info.js",
+    "networks-reset": "truffle networks --clean && npn run networks-inject",
+    "networks": "truffle networks",
+    "compile": "truffle compile",
+    "restore": "truffle compile && npm run networks-reset"
   },
   "repository": {
     "type": "git",
@@ -25,6 +34,8 @@
   },
   "homepage": "https://github.com/gnosis/util-contracts#readme",
   "devDependencies": {
-    "truffle": "^4.0.6"
+    "lodash": "^4.17.10",
+    "truffle": "^4.1.11",
+    "truffle-hdwallet-provider": "^0.0.5"
   }
 }
