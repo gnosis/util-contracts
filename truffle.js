@@ -1,10 +1,11 @@
 const HDWalletProvider = require('truffle-hdwallet-provider')
 
-const DEFAULT_GAS_PRICE = 25e9
-const GAS_LIMIT = 6700000
+const DEFAULT_GAS_PRICE = 5e9
+const GAS_LIMIT = 1e6
+const DEFAULT_MNEMONIC = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
 
 // Get the mnemonic
-const mnemonic = process.env.MNEMONIC
+const mnemonic = process.env.MNEMONIC || DEFAULT_MNEMONIC
 const gasPrice = process.env.GAS_PRICE || DEFAULT_GAS_PRICE
 const gas = GAS_LIMIT
 
@@ -14,6 +15,9 @@ let aditionalNetwork = process.env.NETWORK ? JSON.parse(process.env.NETWORK) : n
 
 console.log(`Using gas limit: ${gas}`)
 console.log(`Using gas price: ${gasPrice}`)
+console.log('Using default mnemonic: %s',
+  (mnemonic === DEFAULT_MNEMONIC)? 'Yes' : 'No'
+)
 
 const networks = {
   development: {
