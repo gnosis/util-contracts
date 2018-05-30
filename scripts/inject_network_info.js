@@ -1,25 +1,13 @@
-const fs = require('fs')
+const networkUtils = require('./util/networkUtils')
 const path = require('path')
 
-// TODO: Since this is a very common lib, maybe better do this without lodash
-const _ = require('lodash')
+const BUILD_DIR = path.join(__dirname, '..', 'build', 'contracts')
+const NETWORKS_FILE_PATH = path.join(__dirname, '..', 'networks.json')
 
-const dir = path.join('build', 'contracts')
+async function inject () {
+  console.log(`Inject networks from ${NETWORKS_FILE_PATH} into built contracts`)
+  await networkUtils.updateBuiltContract(BUILD_DIR, NETWORKS_FILE_PATH)
+  console.log('Success! All networks were injected into the built contracts')
+}
 
-const contractNetworksMap = JSON.parse(fs.readFileSync('networks.json'))
-
-_.toPairs(contractNetworksMap)
-  .map(([name, networks]) => [path.join(dir, name + '.json'), networks])
-  .filter(([file, _networks]) => {
-    if (!fs.existsSync(file)) {
-      throw new Error(
-        `missing build artifact ${file}; make sure contracts are compiled`
-      )
-    }
-    return true
-  })
-  .forEach(([file, networks]) => {
-    const artifactData = JSON.parse(fs.readFileSync(file))
-    _.merge(artifactData.networks, networks)
-    fs.writeFileSync(file, JSON.stringify(artifactData, null, 2))
-  })
+inject().catch(console.error)

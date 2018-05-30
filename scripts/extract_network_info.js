@@ -17,6 +17,4 @@ async function extract () {
   }
 }
 
-extract()
-  .then('Success! The networks were extracted into "networks.json"')
-  .catch(console.error)
+extract().catch(console.error)
