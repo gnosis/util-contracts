@@ -2,7 +2,7 @@ const networkUtils = require('./networkUtils')
 const DEFAULT_CONF_FILE = './conf/network-restore'
 
 async function injectNetworks (configFilePath) {  
-  console.log('Extract networks - Using conf file: %s', configFilePath)
+  console.log('Inject networks - Using conf file: %s', configFilePath)
   const conf = require(configFilePath)
 
   const { networksFile, buildDir } = conf

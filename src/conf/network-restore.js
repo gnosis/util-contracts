@@ -7,5 +7,5 @@ module.exports = {
   buildDir: BUILD_DIR,
   buildDirDependencies: [],
   networksFile: NETWORKS_FILE_PATH
-  // extracttNetworkFilter: ({ name }) => (name === 'MyContract')
+  // extractNetworkFilter: ({ name }) => (name === 'MyContract')
 }

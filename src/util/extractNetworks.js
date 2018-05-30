@@ -2,10 +2,7 @@ const networkUtils = require('./networkUtils')
 const DEFAULT_CONF_FILE = '../conf/network-restore'
 
 // Do not extract the networks for the Migrations contract
-const DEFAULT_FILTER_DEPENDENCIES = ({ name }) => {
-  console.log(name)
-  return (name === 'Migrations')
-}
+const DEFAULT_FILTER_DEPENDENCIES = ({ name }) => (name === 'Migrations')
 
 async function extractNetworks (configFilePath) {
   console.log('Extract networks - Using conf file: %s', configFilePath)
@@ -35,7 +32,7 @@ async function _getNetworkInfo (conf) {
   let networkInfoDependencies = await _getNetworkInfoForDependencies(conf)
 
   // Filter: Useful, for example to remove the Migrations addresses
-  const filterDependencies = conf.extracttNetworkFilter || DEFAULT_FILTER_DEPENDENCIES
+  const filterDependencies = conf.extractNetworkFilter || DEFAULT_FILTER_DEPENDENCIES
   networkInfoDependencies = networkInfoDependencies.filter(filterDependencies)
 
   return Object.assign(networkInfoDependencies, networkInfoProject)
