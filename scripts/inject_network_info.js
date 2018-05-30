@@ -1,7 +1,11 @@
 const networkUtils = require('./util/networkUtils')
-const conf = require('../conf/network-restore')
+const DEFAULT_CONF_FILE = '../conf/network-restore'
 
 async function inject () {
+  const confFile = process.env.CONF_FILE || DEFAULT_CONF_FILE
+  console.log('Extract networks - Using conf file: %s', confFile)
+  const conf = require(confFile)
+
   const { networksFile, buildDir } = conf
 
   console.log(`Inject networks from ${networksFile} into built contracts`)
