@@ -37,6 +37,12 @@
       "links": {},
       "address": "0xc7168757a32cad0f969dfbba5c7b741355b97177",
       "transactionHash": "0xfdec5a39d0c0ea91f0384a346b7c4c47fb724720e8dd705378c6cb4cae10aa2e"
+    },
+    "42": {
+      "events": {},
+      "links": {},
+      "address": "0x38a21406d226785b39033319a00a328d5c0109aa",
+      "transactionHash": "0x44e219379708c15fe63d842a3f44cb7fdfaef9dee30c3994202cc14fd9df87ec"
     }
   },
   "Migrations": {
@@ -45,6 +51,12 @@
       "links": {},
       "address": "0xffb27c4ed46d7f9f6df09743c9db5fdba916aac9",
       "transactionHash": "0xb9eabf2ac646bc201ade82ae1b329a4552bd29b1675d4268e5a4070f95c73bf6"
+    },
+    "42": {
+      "events": {},
+      "links": {},
+      "address": "0xc39ece6816874c64f7d2c6257f0da73934004875",
+      "transactionHash": "0x50293327b07cdd9439f7bafbdbcd66666c04ea37428d0027cad0a496fef710fd"
     }
   }
 }
