@@ -12,7 +12,7 @@ function truffleConfig ({
   aditionalNetwork,
   optimizedEnabled = false,
   urlKovan = 'https://kovan.infura.io/',
-  urlRinkeby = 'http://node.rinkeby.gnosisdev.com:8545', // 'https://kovan.infura.io/',
+  urlRinkeby = 'https://rinkeby.infura.io/', // 'http://node.rinkeby.gnosisdev.com:443',
   urlRopsten = 'https://ropsten.infura.io',
   urlMainnet = 'https://mainnet.infura.io',
   urlDevelopment = 'localhost',

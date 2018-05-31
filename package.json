@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/gnosis/util-contracts#readme",
   "devDependencies": {
-    "truffle": "^4.1.11",
+    "truffle": "4.1.5",
     "truffle-hdwallet-provider": "^0.0.5"
   }
 }
