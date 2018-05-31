@@ -4,5 +4,5 @@ module.exports = function (deployer) {
     // FIXME: Truffle was not updating the migrations
     // Strangely was fixed after manually adding the network config for 
     // compiled Migration contracts.
-    return deployer.deploy(Migrations)
+    deployer.deploy(Migrations)
 }
