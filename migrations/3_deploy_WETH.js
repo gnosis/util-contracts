@@ -20,7 +20,7 @@ module.exports = function (deployer, network, accounts) {
     console.log(`Deploying WETH contract, because the network "${network}" doesn't have any WETH address configured`)
     // deploy EtherToken (WETH)
     return deployer.link(Math, EtherToken)
-      .then(() => deployer.deploy(EtherToken, { overwrite: false }))
+      .then(() => deployer.deploy(EtherToken))
   } else {    
     console.log(`No need to deploy WETH contract. Using: ${wethAddress}`)
   }
