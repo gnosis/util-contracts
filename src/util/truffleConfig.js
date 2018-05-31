@@ -1,4 +1,5 @@
 const HDWalletProvider = require('truffle-hdwallet-provider')
+const assert = require('assert')
 
 const DEFAULT_GAS_PRICE = 5e9
 const GAS_LIMIT = 5e6
@@ -17,10 +18,17 @@ function truffleConfig ({
   urlDevelopment = 'localhost',
   portDevelopment = 8545
 }) {
+  assert(mnemonic, 'The mnemonic has not been provided')
   console.log(`Using gas limit: ${gas}`)
   console.log(`Using gas price: ${gasPrice}`)
   console.log(`Optimizer enabled: ${optimizedEnabled}`)
   console.log('Using default mnemonic: %s', mnemonic === DEFAULT_MNEMONIC)
+
+  const _getProvider = (url) => {
+    return () => {
+      return new HDWalletProvider(mnemonic, url)
+    }
+  }
 
   const networks = {
     development: {
@@ -81,12 +89,6 @@ function truffleConfig ({
         enabled: optimizedEnabled
       }
     }
-  }
-}
-
-function _getProvider (url) {
-  return () => {
-    return new HDWalletProvider(mnemonic, url)
   }
 }
 
