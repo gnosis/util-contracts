@@ -20,19 +20,69 @@ async function getNetworkInfo (buildPath) {
     })
 }
 
-async function updateBuiltContract (buildPath, networkFilePath) {
-  const networkInfo = require(networkFilePath)
+async function updateBuiltContract ({
+  buildPath,
+  networkFilePath,
+  override
+}) {
+  const networkObj = require(networkFilePath)
+  return _updateBuiltContract({ buildPath, networkObj })
+}
+
+async function updateBuiltContractWithInfo ({
+  buildPath,
+  networkInfo,
+  override
+}) {
+  const networkObj = toNetworkObject(networkInfo)
+  return _updateBuiltContract({ buildPath, networkObj, override })
+}
+
+function writeNetworksJson (networkInfo, networkFilePath) {
+  const networkObject = toNetworkObject(networkInfo)
+  const jsonContent = JSON.stringify(networkObject, null, 2) + '\n'
+  fs.writeFileSync(networkFilePath, jsonContent)    
+}
+
+function toNetworkObject (networkInfo) {
+  return networkInfo.reduce((acc, contract) => {
+    acc[contract.name] = contract.networks
+    return acc
+  }, {})
+}
+
+async function _updateBuiltContract ({
+  buildPath,
+  networkObj,
+  override = true,
+  contractFilter
+}) {
   // Get contracts from the build path
   const contracts = await _getContracts(buildPath)
 
+  // Filter contracts
+  let filteredContracts
+  if (contractFilter){
+    filteredContracts = contracts.filter(contractFilter)
+  } else {
+    filteredContracts = contracts
+  }
+
   // Update contracts
-  const contractsWithNetworkInfo = contracts.reduce((acc, contract) => {
+  const contractsWithNetworkInfo = filteredContracts.reduce((acc, contract) => {
     const contractName = contract.contractName
-    const networks = networkInfo[contractName]
+    const networks = networkObj[contractName]
     if (networks) {
       // There's network info for the contract, we update the contract
+      let mergedNetworks
+      if (override) {
+        // No merge. Just override
+        mergedNetworks = networks
+      } else {
+        mergedNetworks = Object.assign(contract.networks, networks)
+      }
       const updatedContract = Object.assign(contract, {
-        networks
+        networks: mergedNetworks
       })
       acc.push(updatedContract)
     }
@@ -50,19 +100,6 @@ async function updateBuiltContract (buildPath, networkFilePath) {
   } else {
     console.log(`There isn't any network network info for the contracts in ${buildPath}`)
   }
-}
-
-function writeNetworksJson (networkInfo, networkFilePath) {
-  const networkObject = toNetworkObject(networkInfo)
-  const jsonContent = JSON.stringify(networkObject, null, 2) + '\n'
-  fs.writeFileSync(networkFilePath, jsonContent)    
-}
-
-function toNetworkObject (networkInfo) {
-  return networkInfo.reduce((acc, contract) => {
-    acc[contract.name] = contract.networks
-    return acc
-  }, {})
 }
 
 async function _getContracts (buildPath) {
@@ -83,5 +120,6 @@ module.exports = {
   getNetworkInfo,
   writeNetworksJson,
   updateBuiltContract,
+  updateBuiltContractWithInfo,
   toNetworkObject
 }

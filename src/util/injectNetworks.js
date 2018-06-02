@@ -8,7 +8,7 @@ async function injectNetworks (configFilePath) {
   const { networksFile, buildDir } = conf
 
   console.log(`Inject networks from ${networksFile} into built contracts`)
-  await networkUtils.updateBuiltContract(buildDir, networksFile)
+  await networkUtils.updateBuiltContract({ buildDir, networksFile })
   console.log('Success! All networks were injected into the built contracts')
 }
 
