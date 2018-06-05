@@ -9,7 +9,6 @@
     "test": "truffle test",
     "truffle": "truffle",
     "migrate": "truffle migrate",
-    "migrate-all": "npm run migrate-dep && npm run migrate",
     "networks-extract": "truffle networks --clean && node src/extract_network_info.js",
     "networks-inject": "node src/inject_network_info.js",
     "networks-reset": "truffle networks --clean && npm run networks-inject",

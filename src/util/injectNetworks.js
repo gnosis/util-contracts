@@ -5,10 +5,10 @@ async function injectNetworks (configFilePath) {
   console.log('Inject networks - Using conf file: %s', configFilePath)
   const conf = require(configFilePath)
 
-  const { networksFile, buildDir } = conf
+  const { networkFilePath, buildPath } = conf
 
-  console.log(`Inject networks from ${networksFile} into built contracts`)
-  await networkUtils.updateBuiltContract({ buildDir, networksFile })
+  console.log(`Inject networks from ${networkFilePath} into built contracts`)
+  await networkUtils.updateBuiltContract({ buildPath, networkFilePath })
   console.log('Success! All networks were injected into the built contracts')
 }
 

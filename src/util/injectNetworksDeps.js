@@ -4,12 +4,12 @@ const path = require('path')
 const FILTER_OUT_MIGRATIONS = contract => contract.name !== 'Migrations'
 
 async function injectDependencies ({
-  buildDir,
+  buildPath,
   packages,
   nodeModulesPath,
   filter = FILTER_OUT_MIGRATIONS
 }) {
-  const buildDirPath = path.join(nodeModulesPath, buildDir)
+  const buildDirPath = path.join(nodeModulesPath, buildPath)
   console.log('Getting network info from %s', buildDirPath)
   let networkInfo = await networkUtils
     .getNetworkInfo(buildDirPath)
@@ -27,7 +27,7 @@ async function injectDependencies ({
       nodeModulesPath,
       package,
       'node_modules',
-      buildDir
+      buildPath
     )
     // Merge network info with the dependencies
     await networkUtils.updateBuiltContractWithInfo({
