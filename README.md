@@ -18,10 +18,10 @@ yarn networks
 # In a release branch (i.e. release/vX.Y.X)
 # Migrate the version to the testnets, at least rinkeby, and posibly mainnet
 # You can optionally change the gas price using the GAS_PRICE env variable
+yarn restore
 MNEMONIC="your mnemonic here..." yarn migrate --network rinkeby
 
 # Extract the network file
-yarn networks --clean
 yarn networks-extract
 
 # Verify the contract in Etherscan
