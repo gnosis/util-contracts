@@ -8,10 +8,10 @@ The token and contracts can be in **Etherscan**:
   * Math: No deployed yet
 * **Rinkeby**: 
   * EtherToken: https://rinkeby.etherscan.io/token/0xc778417e063141139fce010982780140aa0cd5ab
-  * Math: https://rinkeby.etherscan.io/token/0x1b8211bc90f3a77c451a853cadeb8673cc1263c9
+  * Math: https://rinkeby.etherscan.io/address/0x1b8211bc90f3a77c451a853cadeb8673cc1263c9
 * **Kovan**:
   * EtherToken: https://kovan.etherscan.io/token/0xd0a1e359811322d97991e03f863a0c30c2cf029c
-  * Math: https://kovan.etherscan.io/token/0x38a21406d226785b39033319a00a328d5c0109aa
+  * Math: https://kovan.etherscan.io/address/0x38a21406d226785b39033319a00a328d5c0109aa
 
 
 ## Setup and show the networks
