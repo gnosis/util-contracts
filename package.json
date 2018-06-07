@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "rpc": "ganache-cli -d --mnemonic 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat' --defaultBalanceEther '500'",
-    "prepack": "npm run restore",
+    "preversion": "rm -rf build && npm run restore",
     "test": "truffle test",
     "truffle": "truffle",
     "migrate": "truffle migrate",
