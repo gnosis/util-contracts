@@ -1,6 +1,5 @@
-function migrate (artifacts, deployer, network, accounts) {
+async function migrate ({ artifacts, deployer }) {
   const Math = artifacts.require('Math')
-
   return deployer.deploy(Math)
 }
 

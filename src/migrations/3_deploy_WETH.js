@@ -1,4 +1,4 @@
-function migrate (artifacts, deployer, network, accounts) {
+async function migrate ({ artifacts, deployer, network }) {
   const Math = artifacts.require('Math')
   const EtherToken = artifacts.require('EtherToken')
 

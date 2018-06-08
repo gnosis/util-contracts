@@ -14,7 +14,7 @@
     "networks-reset": "truffle networks --clean && npm run networks-inject",
     "networks": "truffle networks",
     "compile": "truffle compile",
-    "restore": "truffle compile && npm run networks-reset"
+    "restore": "rm -rf build && truffle compile && npm run networks-reset"
   },
   "repository": {
     "type": "git",
