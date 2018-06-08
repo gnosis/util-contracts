@@ -14,7 +14,8 @@
     "networks-reset": "truffle networks --clean && npm run networks-inject",
     "networks": "truffle networks",
     "compile": "eslint --fix . && eslint . && truffle compile",
-    "restore": "rm -rf build && truffle compile && npm run networks-reset"
+    "restore": "rm -rf build && truffle compile && npm run networks-reset",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
