@@ -13,7 +13,7 @@
     "networks-inject": "node src/inject_network_info.js",
     "networks-reset": "truffle networks --clean && npm run networks-inject",
     "networks": "truffle networks",
-    "compile": "truffle compile",
+    "compile": "eslint --fix . && eslint . && truffle compile",
     "restore": "rm -rf build && truffle compile && npm run networks-reset"
   },
   "repository": {
@@ -35,6 +35,12 @@
   "homepage": "https://github.com/gnosis/util-contracts#readme",
   "devDependencies": {
     "truffle": "4.1.5",
-    "truffle-hdwallet-provider": "^0.0.5"
+    "truffle-hdwallet-provider": "^0.0.5",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.1.0"
   }
 }

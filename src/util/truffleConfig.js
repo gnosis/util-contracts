@@ -8,7 +8,7 @@ const DEFAULT_MNEMONIC = 'candy maple cake sugar pudding cream honey rich smooth
 function truffleConfig ({
   mnemonic = DEFAULT_MNEMONIC,
   gasPrice = DEFAULT_GAS_PRICE,
-  gas = GAS_LIMIT,  
+  gas = GAS_LIMIT,
   aditionalNetwork,
   optimizedEnabled = false,
   urlKovan = 'https://kovan.infura.io/',
@@ -24,7 +24,7 @@ function truffleConfig ({
   console.log(`Optimizer enabled: ${optimizedEnabled}`)
   console.log('Using default mnemonic: %s', mnemonic === DEFAULT_MNEMONIC)
 
-  const _getProvider = (url) => {
+  const _getProvider = url => {
     return () => {
       return new HDWalletProvider(mnemonic, url)
     }
@@ -34,7 +34,7 @@ function truffleConfig ({
     development: {
       host: urlDevelopment,
       port: portDevelopment,
-      gas, 
+      gas,
       gasPrice,
       network_id: '*'
     },

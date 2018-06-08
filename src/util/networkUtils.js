@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-async function getNetworkInfo (buildPath) {  
+async function getNetworkInfo (buildPath) {
   // Get contracts from the build path
   const contracts = await _getContracts(buildPath)
 
@@ -15,7 +15,7 @@ async function getNetworkInfo (buildPath) {
     .map(contract => {
       return {
         name: contract.contractName,
-        networks: contract.networks,
+        networks: contract.networks
       }
     })
 }
@@ -41,7 +41,7 @@ async function updateBuiltContractWithInfo ({
 function writeNetworksJson (networkInfo, networkFilePath) {
   const networkObject = toNetworkObject(networkInfo)
   const jsonContent = JSON.stringify(networkObject, null, 2) + '\n'
-  fs.writeFileSync(networkFilePath, jsonContent)    
+  fs.writeFileSync(networkFilePath, jsonContent)
 }
 
 function toNetworkObject (networkInfo) {
@@ -62,7 +62,7 @@ async function _updateBuiltContract ({
 
   // Filter contracts
   let filteredContracts
-  if (contractFilter){
+  if (contractFilter) {
     filteredContracts = contracts.filter(contractFilter)
   } else {
     filteredContracts = contracts

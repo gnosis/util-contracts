@@ -4,7 +4,7 @@ async function migrate ({ artifacts, deployer, network }) {
 
   function getWethAddress () {
     try {
-      return EtherToken.address 
+      return EtherToken.address
     } catch (error) {
       // return EtherToken.address throw an error if there's no config address
       // for this network
@@ -19,7 +19,7 @@ async function migrate ({ artifacts, deployer, network }) {
     return deployer
       .then(() => deployer.link(Math, EtherToken))
       .then(() => deployer.deploy(EtherToken))
-  } else {    
+  } else {
     console.log(`No need to deploy WETH contract. Using: ${wethAddress}`)
   }
 }
