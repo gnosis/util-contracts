@@ -44,12 +44,6 @@ function truffleConfig ({
       gas,
       gasPrice
     },
-    mainnet: {
-      provider: _getProvider(urlMainnet),
-      network_id: '0',
-      gas,
-      gasPrice
-    },
     kovan: {
       provider: _getProvider(urlKovan),
       network_id: '42',
