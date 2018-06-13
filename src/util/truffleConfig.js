@@ -1,4 +1,4 @@
-const HDWalletProvider = require('truffle-hdwallet-provider')
+const HDWalletProvider = require('./HDWalletProvider')
 const assert = require('assert')
 
 const DEFAULT_GAS_PRICE_GWEI = 5
@@ -27,7 +27,8 @@ function truffleConfig ({
 
   const _getProvider = url => {
     return () => {
-      return new HDWalletProvider(mnemonic, url)
+      // console.log('Create HDWalletProvider for ', url)
+      return new HDWalletProvider({ mnemonic, url })
     }
   }
 
