@@ -38,7 +38,7 @@ function truffleConfig ({
       gasPrice,
       network_id: '*'
     },
-    live: {
+    mainnet: {
       provider: _getProvider(urlMainnet),
       network_id: '1',
       gas,
