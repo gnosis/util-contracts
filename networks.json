@@ -1,11 +1,5 @@
 {
   "EtherToken": {
-    "0": {
-      "events": {},
-      "links": {},
-      "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-      "transactionHash": "0xb95343413e459a0f97461812111254163ae53467855c0d73e0f1e7c5b8442fa3"
-    },
     "1": {
       "events": {},
       "links": {},
@@ -46,6 +40,12 @@
     }
   },
   "Migrations": {
+    "1": {
+      "events": {},
+      "links": {},
+      "address": "0x8490ed47f570268d7af251b553a75a5fe0717c00",
+      "transactionHash": "0x75237d0d7bf12000533cf28d1d03ffdc187198a42d6f8ec886e16f75e2988516"
+    },
     "4": {
       "events": {},
       "links": {},
