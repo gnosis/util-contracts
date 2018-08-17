@@ -1,11 +1,11 @@
-pragma solidity ^0.4.21;
-import "./StandardToken.sol";
+pragma solidity ^0.4.24;
+import "openzeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
 
 
 /// @title Token contract - Token exchanging Ether 1:1
 /// @author Stefan George - <stefan@gnosis.pm>
 contract EtherToken is StandardToken {
-    using Math for *;
+    using SafeMath for *;
 
     /*
      *  Events
@@ -29,7 +29,7 @@ contract EtherToken is StandardToken {
         payable
     {
         balances[msg.sender] = balances[msg.sender].add(msg.value);
-        totalTokens = totalTokens.add(msg.value);
+        totalSupply_ = totalSupply_.add(msg.value);
         emit Deposit(msg.sender, msg.value);
     }
 
@@ -40,7 +40,7 @@ contract EtherToken is StandardToken {
     {
         // Balance covers value
         balances[msg.sender] = balances[msg.sender].sub(value);
-        totalTokens = totalTokens.sub(value);
+        totalSupply_ = totalSupply_.sub(value);
         msg.sender.transfer(value);
         emit Withdrawal(msg.sender, value);
     }

@@ -41,7 +41,7 @@ class HDWalletProvider extends TruffleHDWalletProvider {
     }
   }
 
-  _sendAsyncWithNonce() {
+  _sendAsyncWithNonce () {
     return super.sendAsync()
   }
 
