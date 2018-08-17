@@ -1,5 +1,5 @@
 async function migrate ({ artifacts, deployer, network }) {
-  const Math = artifacts.require('Math')
+  const SafeMath = artifacts.require('SafeMath')
   const EtherToken = artifacts.require('EtherToken')
 
   function getWethAddress () {
@@ -17,7 +17,7 @@ async function migrate ({ artifacts, deployer, network }) {
     console.log(`Deploying WETH contract, because the network "${network}" doesn't have any WETH address configured`)
     // deploy EtherToken (WETH)
     return deployer
-      .then(() => deployer.link(Math, EtherToken))
+      .then(() => deployer.link(SafeMath, EtherToken))
       .then(() => deployer.deploy(EtherToken))
   } else {
     console.log(`No need to deploy WETH contract. Using: ${wethAddress}`)
