@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/util-contracts",
-  "version": "1.0.1",
+  "version": "2.0.0-alpha",
   "description": "Utility contracts for Gnosis",
   "main": "index.js",
   "scripts": {
@@ -9,9 +9,9 @@
     "test": "truffle test",
     "truffle": "truffle",
     "migrate": "truffle migrate",
-    "networks-extract": "truffle networks --clean && node src/extract_network_info.js",
-    "networks-inject": "node src/inject_network_info.js",
-    "networks-reset": "truffle networks --clean && npm run networks-inject",
+    "networks-extract": "truffle networks --clean && tnt eN",
+    "networks-inject": "tnt iN",
+    "networks-reset": "truffle networks --clean && tnt iN",
     "networks": "truffle networks",
     "compile": "eslint --fix . && eslint . && truffle compile",
     "restore": "rm -rf build && truffle compile && npm run networks-reset",
@@ -35,14 +35,16 @@
   },
   "homepage": "https://github.com/gnosis/util-contracts#readme",
   "devDependencies": {
-    "truffle": "4.1.11",
-    "truffle-hdwallet-provider": "^0.0.5",
+    "@gnosis.pm/truffle-nice-tools": "^1.2.1",
+    "decimal.js": "^10.0.1",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-node": "^6.0.0",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.1.0",
-    "openzeppelin-solidity": "github:gnosis/openzeppelin-solidity#fix-signed-safemath"
+    "openzeppelin-solidity": "github:gnosis/openzeppelin-solidity#fix-signed-safemath",
+    "truffle": "4.1.11",
+    "truffle-hdwallet-provider": "^0.0.5"
   }
 }
