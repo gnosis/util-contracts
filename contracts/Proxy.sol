@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.4.21;
 
 /// @title Proxied - indicates that a contract will be proxied. Also defines storage requirements for Proxy.
 /// @author Alan Lu - <alan@gnosis.pm>
