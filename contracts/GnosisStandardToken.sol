@@ -3,7 +3,9 @@ import "./Token.sol";
 import "./Math.sol";
 import "./Proxy.sol";
 
-
+/**
+ * Deprecated: Use Open Zeppeling one instead
+ */
 contract StandardTokenData {
 
     /*
@@ -14,8 +16,11 @@ contract StandardTokenData {
     uint totalTokens;
 }
 
+/**
+ * Deprecated: Use Open Zeppeling one instead
+ */
 /// @title Standard token contract with overflow protection
-contract StandardToken is Token, StandardTokenData {
+contract GnosisStandardToken is Token, StandardTokenData {
     using Math for *;
 
     /*

@@ -1,10 +1,10 @@
 pragma solidity ^0.4.21;
-import "./StandardToken.sol";
+import "./GnosisStandardToken.sol";
 
 
 /// @title Token contract - Token exchanging Ether 1:1
 /// @author Stefan George - <stefan@gnosis.pm>
-contract EtherToken is StandardToken {
+contract EtherToken is GnosisStandardToken {
     using Math for *;
 
     /*
