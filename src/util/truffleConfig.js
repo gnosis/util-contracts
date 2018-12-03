@@ -1,4 +1,5 @@
 const assert = require('assert')
+const HDWalletProvider = require('./HDWalletProvider')
 
 const DEFAULT_GAS_PRICE_GWEI = 5
 const GAS_LIMIT = 5e6
@@ -23,20 +24,23 @@ function truffleConfig ({
   console.log(`Using gas price: ${gasPriceGWei} Gwei`)
   console.log(`Optimizer enabled: ${optimizedEnabled}`)
   console.log('Sign transactions using: %s', mnemonic ? 'Mnemonic' : 'Private Key')
+
   let _getProvider
-  if (mnemonic) {
-    console.log('Using default mnemonic: %s', mnemonic === DEFAULT_MNEMONIC)
-    const HDWalletProvider = require('./HDWalletProvider')
+  if (privateKey) {
+    console.log('Using private key')
     _getProvider = url => {
       return () => {
-        return new HDWalletProvider({ mnemonic, url })
+        return new HDWalletProvider({
+          privateKeys: [ privateKey ],
+          url
+        })
       }
     }
   } else {
-    const HDWalletProviderPrivKeys = require('truffle-hdwallet-provider-privkey')
+    console.log(mnemonic === DEFAULT_MNEMONIC ? 'Using default mnemonic' : 'Using custom mnemonic')    
     _getProvider = url => {
       return () => {
-        return new HDWalletProviderPrivKeys([ privateKey ], url)
+        return new HDWalletProvider({ mnemonic, url })
       }
     }
   }
