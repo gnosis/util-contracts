@@ -11,7 +11,7 @@ function truffleConfig ({
   gasPriceGWei = DEFAULT_GAS_PRICE_GWEI,
   gas = GAS_LIMIT,
   aditionalNetwork,
-  optimizedEnabled = false,
+  optimizedEnabled = true,
   urlKovan = 'https://kovan.infura.io/',
   urlRinkeby = 'https://rinkeby.infura.io/', // 'http://node.rinkeby.gnosisdev.com:443',
   urlRopsten = 'https://ropsten.infura.io',
@@ -19,7 +19,9 @@ function truffleConfig ({
   urlDevelopment = 'localhost',
   portDevelopment = 8545,
   solcUseDocker = false,
-  solcVersion = '0.4.25'
+  solcVersion = '0.4.25',
+  // Just a temporal flag to support truffle 4 config
+  compatibilityTruffle4 = false
 }) {
   assert(mnemonic || privateKey, 'The mnemonic or privateKey has not been provided')
   console.log(`Using gas limit: ${gas / 1000} K`)
@@ -94,9 +96,20 @@ function truffleConfig ({
     }
   }
 
-  return {
-    networks,
-    compilers: {
+  const truffleConfig = {
+    networks
+  }
+
+  if (compatibilityTruffle4) {
+    // Truffle 4
+    truffleConfig.solc = {
+      optimizer: {
+        enabled: optimizedEnabled
+      }
+    }
+  } else {
+    // Truffle 5
+    truffleConfig.compilers = {
       solc: {
         version: solcVersion,
         docker: solcUseDocker,
@@ -110,6 +123,8 @@ function truffleConfig ({
       }
     }
   }
+
+  return truffleConfig
 }
 
 module.exports = truffleConfig
