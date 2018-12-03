@@ -1,4 +1,4 @@
-pragma solidity ^0.4.25;
+pragma solidity ^0.4.24;
 import "./Token.sol";
 import "./Math.sol";
 import "./Proxy.sol";

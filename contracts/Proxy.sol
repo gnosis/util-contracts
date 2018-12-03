@@ -1,4 +1,4 @@
-pragma solidity ^0.4.25;
+pragma solidity ^0.4.24;
 
 
 /// @title Proxied - indicates that a contract will be proxied. Also defines storage requirements for Proxy.
