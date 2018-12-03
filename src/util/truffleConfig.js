@@ -17,7 +17,9 @@ function truffleConfig ({
   urlRopsten = 'https://ropsten.infura.io',
   urlMainnet = 'https://mainnet.infura.io',
   urlDevelopment = 'localhost',
-  portDevelopment = 8545
+  portDevelopment = 8545,
+  solcUseDocker = false,
+  solcVersion = '0.4.25'
 }) {
   assert(mnemonic || privateKey, 'The mnemonic or privateKey has not been provided')
   console.log(`Using gas limit: ${gas / 1000} K`)
@@ -94,9 +96,17 @@ function truffleConfig ({
 
   return {
     networks,
-    solc: {
-      optimizer: {
-        enabled: optimizedEnabled
+    compilers: {
+      solc: {
+        version: solcVersion,
+        docker: solcUseDocker,
+        settings: {
+          optimizer: {
+            enabled: optimizedEnabled, // Default: false
+            runs: 200
+          }
+          // evmVersion: "byzantium"  // Default: "byzantium". Others:  "homestead", ...
+        }
       }
     }
   }

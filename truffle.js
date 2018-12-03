@@ -11,6 +11,10 @@ if (!privateKey && !mnemonic) {
   mnemonic = DEFAULT_MNEMONIC
 }
 
+// Solidity compiler (solc) config:
+const solcUseDocker = process.env.SOLC_USE_DOCKER === 'true' || false
+const solcVersion = '0.4.25'
+
 const gasPriceGWei = process.env.GAS_PRICE_GWEI || DEFAULT_GAS_PRICE_GWEI
 const gas = GAS_LIMIT
 
@@ -23,5 +27,7 @@ module.exports = truffleConfig({
   privateKey,
   gasPriceGWei,
   gas,
-  aditionalNetwork
+  aditionalNetwork,
+  solcUseDocker,
+  solcVersion
 })
