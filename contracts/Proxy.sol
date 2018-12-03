@@ -16,7 +16,7 @@ contract Proxy is Proxied {
     constructor (address _masterCopy)
         public
     {
-        require(_masterCopy != 0);
+        require(_masterCopy != 0, "The master copy is required");
         masterCopy = _masterCopy;
     }
 
