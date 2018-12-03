@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/util-contracts",
-  "version": "1.2.0-RC.1",
+  "version": "1.2.0-RC3",
   "description": "Utility contracts for Gnosis",
   "main": "index.js",
   "scripts": {
