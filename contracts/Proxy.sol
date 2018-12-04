@@ -1,4 +1,5 @@
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.24;
+
 
 /// @title Proxied - indicates that a contract will be proxied. Also defines storage requirements for Proxy.
 /// @author Alan Lu - <alan@gnosis.pm>
@@ -6,15 +7,16 @@ contract Proxied {
     address public masterCopy;
 }
 
+
 /// @title Proxy - Generic proxy contract allows to execute all transactions applying the code of a master contract.
 /// @author Stefan George - <stefan@gnosis.pm>
 contract Proxy is Proxied {
     /// @dev Constructor function sets address of master copy contract.
     /// @param _masterCopy Master copy address.
-    function Proxy(address _masterCopy)
+    constructor (address _masterCopy)
         public
     {
-        require(_masterCopy != 0);
+        require(_masterCopy != 0, "The master copy is required");
         masterCopy = _masterCopy;
     }
 

@@ -3,9 +3,10 @@ const Web3 = require('web3')
 console.log('Create HDWalletProvider')
 
 class HDWalletProvider extends TruffleHDWalletProvider {
-  constructor ({ mnemonic, url, blockForNonceCalculation = 'pending' }) { // latest
+  constructor ({ mnemonic, privateKeys, url, blockForNonceCalculation = 'pending' }) { // latest
     // console.log('[HDWalletProvider] New provider for: %s', url)
-    super(mnemonic, url)
+    const accountCredentials = privateKeys || mnemonic
+    super(accountCredentials, url)
     this._web3 = new Web3(this)
     this._address = this.addresses[0]
     this._blockForNonceCalculation = blockForNonceCalculation
@@ -41,7 +42,7 @@ class HDWalletProvider extends TruffleHDWalletProvider {
     }
   }
 
-  _sendAsyncWithNonce() {
+  _sendAsyncWithNonce () {
     return super.sendAsync()
   }
 

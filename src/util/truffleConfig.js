@@ -1,4 +1,5 @@
 const assert = require('assert')
+const HDWalletProvider = require('./HDWalletProvider')
 
 const DEFAULT_GAS_PRICE_GWEI = 5
 const GAS_LIMIT = 5e6
@@ -10,33 +11,40 @@ function truffleConfig ({
   gasPriceGWei = DEFAULT_GAS_PRICE_GWEI,
   gas = GAS_LIMIT,
   aditionalNetwork,
-  optimizedEnabled = false,
+  optimizedEnabled = true,
   urlKovan = 'https://kovan.infura.io/',
   urlRinkeby = 'https://rinkeby.infura.io/', // 'http://node.rinkeby.gnosisdev.com:443',
   urlRopsten = 'https://ropsten.infura.io',
   urlMainnet = 'https://mainnet.infura.io',
   urlDevelopment = 'localhost',
-  portDevelopment = 8545
+  portDevelopment = 8545,
+  solcUseDocker = false,
+  solcVersion = '0.4.25',
+  // Just a temporal flag to support truffle 4 config
+  compatibilityTruffle4 = false
 }) {
   assert(mnemonic || privateKey, 'The mnemonic or privateKey has not been provided')
   console.log(`Using gas limit: ${gas / 1000} K`)
   console.log(`Using gas price: ${gasPriceGWei} Gwei`)
   console.log(`Optimizer enabled: ${optimizedEnabled}`)
   console.log('Sign transactions using: %s', mnemonic ? 'Mnemonic' : 'Private Key')
+
   let _getProvider
-  if (mnemonic) {
-    console.log('Using default mnemonic: %s', mnemonic === DEFAULT_MNEMONIC)
-    const HDWalletProvider = require('./HDWalletProvider')
+  if (privateKey) {
+    console.log('Using private key')
     _getProvider = url => {
       return () => {
-        return new HDWalletProvider({ mnemonic, url })
+        return new HDWalletProvider({
+          privateKeys: [ privateKey ],
+          url
+        })
       }
     }
   } else {
-    const HDWalletProviderPrivKeys = require('truffle-hdwallet-provider-privkey')
+    console.log(mnemonic === DEFAULT_MNEMONIC ? 'Using default mnemonic' : 'Using custom mnemonic')    
     _getProvider = url => {
       return () => {
-        return new HDWalletProviderPrivKeys([ privateKey ], url)
+        return new HDWalletProvider({ mnemonic, url })
       }
     }
   }
@@ -88,14 +96,35 @@ function truffleConfig ({
     }
   }
 
-  return {
-    networks,
-    solc: {
+  const truffleConfig = {
+    networks
+  }
+
+  if (compatibilityTruffle4) {
+    // Truffle 4
+    truffleConfig.solc = {
       optimizer: {
         enabled: optimizedEnabled
       }
     }
+  } else {
+    // Truffle 5
+    truffleConfig.compilers = {
+      solc: {
+        version: solcVersion,
+        docker: solcUseDocker,
+        settings: {
+          optimizer: {
+            enabled: optimizedEnabled, // Default: false
+            runs: 200
+          }
+          // evmVersion: "byzantium"  // Default: "byzantium". Others:  "homestead", ...
+        }
+      }
+    }
   }
+
+  return truffleConfig
 }
 
 module.exports = truffleConfig

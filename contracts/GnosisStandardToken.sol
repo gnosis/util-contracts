@@ -1,7 +1,8 @@
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.24;
 import "./Token.sol";
 import "./Math.sol";
 import "./Proxy.sol";
+
 
 /**
  * Deprecated: Use Open Zeppeling one instead
@@ -15,6 +16,7 @@ contract StandardTokenData {
     mapping (address => mapping (address => uint)) allowances;
     uint totalTokens;
 }
+
 
 /**
  * Deprecated: Use Open Zeppeling one instead
@@ -34,9 +36,11 @@ contract GnosisStandardToken is Token, StandardTokenData {
         public
         returns (bool)
     {
-        if (   !balances[msg.sender].safeToSub(value)
-            || !balances[to].safeToAdd(value))
+        if (!balances[msg.sender].safeToSub(value) ||
+            !balances[to].safeToAdd(value)) {
             return false;
+        }
+
         balances[msg.sender] -= value;
         balances[to] += value;
         emit Transfer(msg.sender, to, value);
@@ -52,10 +56,11 @@ contract GnosisStandardToken is Token, StandardTokenData {
         public
         returns (bool)
     {
-        if (   !balances[from].safeToSub(value)
-            || !allowances[from][msg.sender].safeToSub(value)
-            || !balances[to].safeToAdd(value))
+        if (!balances[from].safeToSub(value) ||
+            !allowances[from][msg.sender].safeToSub(value) ||
+            !balances[to].safeToAdd(value)){
             return false;
+        }
         balances[from] -= value;
         allowances[from][msg.sender] -= value;
         balances[to] += value;
