@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity >=0.4.24 ^0.5.1;
 
 /// @title Proxied - indicates that a contract will be proxied. Also defines storage requirements for Proxy.
 /// @author Alan Lu - <alan@gnosis.pm>
@@ -14,7 +14,7 @@ contract Proxy is Proxied {
     constructor(address _masterCopy)
         public
     {
-        require(_masterCopy != 0);
+        require(_masterCopy != address(0));
         masterCopy = _masterCopy;
     }
 

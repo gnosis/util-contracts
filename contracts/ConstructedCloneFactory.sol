@@ -1,12 +1,12 @@
-pragma solidity ^0.4.24;
+pragma solidity >=0.4.24 ^0.5.1;
 
 contract ConstructedCloneFactory {
 
     event CloneCreated(address indexed target, address clone);
     
-    function cloneConstructor(bytes) external;
+    function cloneConstructor(bytes calldata) external;
 
-    function createClone(address target, bytes consData) internal returns (address result) {
+    function createClone(address target, bytes memory consData) internal returns (address result) {
         bytes memory consPayload = abi.encodeWithSignature("cloneConstructor(bytes)", consData);
         bytes memory clone = new bytes(consPayload.length + 99);
         
@@ -33,6 +33,6 @@ contract ConstructedCloneFactory {
           result := create(0, data, len)
         }
         
-        require(result != 0);
+        require(result != address(0));
     }
 }

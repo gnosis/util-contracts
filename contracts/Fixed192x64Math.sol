@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity >=0.4.24 ^0.5.1;
 
 
 /// @title Fixed192x64Math library - Allows calculation of logarithmic and exponential functions
@@ -152,7 +152,7 @@ library Fixed192x64Math {
                     upper = lower + uint(zpow);
                 else
                     upper = 2**256-1;
-                return;
+                return (0, 0);
             }
             else
                 return (2**256-1, 2**256-1);
@@ -160,7 +160,7 @@ library Fixed192x64Math {
         zpow = (zpow >> (-shift)) + 1;
         lower = uint(result) >> (-shift);
         upper = lower + uint(zpow);
-        return;
+        return (0, 0);
     }
 
     /// @dev Returns natural logarithm value of given x
@@ -261,7 +261,7 @@ library Fixed192x64Math {
     /// @dev Returns maximum of an array
     /// @param nums Numbers to look through
     /// @return Maximum number
-    function max(int[] nums)
+    function max(int[] memory nums)
         public
         pure
         returns (int maxNum)
