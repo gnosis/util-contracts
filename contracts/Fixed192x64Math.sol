@@ -152,7 +152,7 @@ library Fixed192x64Math {
                     upper = lower + uint(zpow);
                 else
                     upper = 2**256-1;
-                return (0, 0);
+                return (lower, upper);
             }
             else
                 return (2**256-1, 2**256-1);
@@ -160,7 +160,7 @@ library Fixed192x64Math {
         zpow = (zpow >> (-shift)) + 1;
         lower = uint(result) >> (-shift);
         upper = lower + uint(zpow);
-        return (0, 0);
+        return (lower, upper);
     }
 
     /// @dev Returns natural logarithm value of given x

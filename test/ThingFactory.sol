@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity >=0.4.24 ^0.5.1;
 
 import "../contracts/ConstructedCloneFactory.sol";
 
@@ -23,11 +23,11 @@ contract ThingFactory is ConstructedCloneFactory, ThingData {
 
     event ThingCreated(Thing thing);
 
-    constructor() {
+    constructor() public {
         masterCopy = new Thing();
     }
 
-    function cloneConstructor(bytes /* args */) external {
+    function cloneConstructor(bytes calldata /* args */) external {
         // (uint paramA, uint paramB) = abi.decodePacked(args, uint, uint);
         uint paramA;
         uint paramB;
@@ -44,7 +44,7 @@ contract ThingFactory is ConstructedCloneFactory, ThingData {
     }
 
     function createThing(uint paramA, uint paramB) public returns (Thing thing) {
-        thing = Thing(createClone(masterCopy, abi.encodePacked(paramA, paramB)));
+        thing = Thing(createClone(address(masterCopy), abi.encodePacked(paramA, paramB)));
         emit ThingCreated(thing);
     }
 }
