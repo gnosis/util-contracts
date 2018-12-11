@@ -24,13 +24,13 @@ contract('ThingFactory (ConstructedCloneFactory)', function(accounts) {
     let thing
 
     before(async function() {
-      thing = getParamFromTxEvent(await thingFactory.createThing(43781478321, "0x4897325638912478239328626489216483217647238146321649321649321894"), 'thing', Thing);
+      thing = await getParamFromTxEvent(await thingFactory.createThing(43781478321, "0x4897325638912478239328626489216483217647238146321649321649321894"), 'thing', Thing);
     })
 
     it('can make weird stuff', async function() {
-      const weirdStuff1 = getParamFromTxEvent(await thing.makeWeirdStuff(0), 'weirdStuff');
+      const weirdStuff1 = await getParamFromTxEvent(await thing.makeWeirdStuff(0), 'weirdStuff');
       await thing.makeWeirdStuff(20);
-      const weirdStuff3 = getParamFromTxEvent(await thing.makeWeirdStuff(-20), 'weirdStuff');
+      const weirdStuff3 = await getParamFromTxEvent(await thing.makeWeirdStuff(-20), 'weirdStuff');
       assert.equal(weirdStuff1, weirdStuff3);
     })
   })
