@@ -1,7 +1,7 @@
 const _ = require('lodash')
 
 const PRECISION = 80
-const Decimal = require('decimal.js').clone({ precision: PRECISION })
+const Decimal = require('decimal.js').clone({ precision: PRECISION, toExpPos: PRECISION })
 
 const ONE = Decimal(2).pow(64)
 

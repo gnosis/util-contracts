@@ -3,7 +3,7 @@ const testGas = require('@gnosis.pm/truffle-nice-tools').testGas
 
 const utils = require('./utils')
 const { Decimal, isClose, randrange, randnums, ONE, assertRejects } = utils
-
+const { toBN } = web3.utils
 const Fixed192x64Math = artifacts.require('Fixed192x64Math')
 
 const contracts = [Fixed192x64Math]
@@ -26,7 +26,7 @@ contract('Fixed192x64Math', function () {
 
     for (let x of [1, ONE, MAX_VALUE, randrange(1, MAX_VALUE)].concat(randnums(1, MAX_VALUE, 10))) {
       let X = Decimal(x.valueOf()).div(ONE)
-      let actual = Decimal((await mathLib.ln.call(x.valueOf())).div(ONE.valueOf()).valueOf())
+      let actual = Decimal((await mathLib.ln.call(x.valueOf())).toString()).div(ONE)
       let expected = X.ln()
       assert(
         isClose(actual, expected),
@@ -47,7 +47,7 @@ contract('Fixed192x64Math', function () {
       const X = Decimal(x.valueOf()).div(ONE)
       let actual
       try {
-        actual = Decimal((await mathLib.exp.call(x.valueOf())).valueOf()).div(ONE)
+        actual = Decimal((await mathLib.exp.call(x.valueOf())).toString()).div(ONE)
       } catch (e) {
         throw new Error(`exp(${X}) failed (${x}): ${e.message}`)
       }
@@ -75,8 +75,8 @@ contract('Fixed192x64Math', function () {
       const X = new Decimal(x.valueOf()).div(ONE)
       let lower, upper
       try {
-        [lower, upper] = (await mathLib.log2Bounds.call(x.valueOf()))
-          .map(bound => new Decimal(bound.valueOf()).div(ONE))
+        ({ lower, upper } = (await mathLib.log2Bounds.call(x.valueOf())))
+        ;[lower, upper] = [lower, upper].map(bound => new Decimal(bound.toString()).div(ONE))
       } catch (e) {
         throw new Error(`log2Bounds(${X}) failed (${x}): ${e.message}`)
       }
@@ -126,8 +126,8 @@ contract('Fixed192x64Math', function () {
       const X = new Decimal(x.valueOf()).div(ONE)
       let lower, upper
       try {
-        [lower, upper] = (await mathLib.pow2Bounds.call(x.valueOf()))
-          .map(bound => new Decimal(bound.valueOf()).div(ONE))
+        ({ lower, upper } = (await mathLib.pow2Bounds.call(x.valueOf())))
+        ;[lower, upper] = [lower, upper].map(bound => new Decimal(bound.toString()).div(ONE))
       } catch (e) {
         throw new Error(`pow2Bounds(${X}) failed (${x}): ${e.message}`)
       }
@@ -166,7 +166,7 @@ contract('Fixed192x64Math', function () {
 
   it('should compute max', async () => {
     for (let seq of _.range(10).map(() => randnums(-100, 100, 10))) {
-      assert.equal((await mathLib.max.call(seq)).valueOf(), Decimal.max(...seq).valueOf())
+      assert.equal((await mathLib.max.call(seq.map(v => toBN(v.toString())))).valueOf(), Decimal.max(...seq).valueOf())
     }
   })
 })
