@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.5.2;
 
 /// @title Math library - Allows calculation of logarithmic and exponential functions
 /// @author Alan Lu - <alan.lu@gnosis.pm>

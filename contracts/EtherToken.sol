@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.5.2;
 import "./GnosisStandardToken.sol";
 
 /// @title Token contract - Token exchanging Ether 1:1
