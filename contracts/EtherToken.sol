@@ -1,6 +1,5 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 import "./GnosisStandardToken.sol";
-
 
 /// @title Token contract - Token exchanging Ether 1:1
 /// @author Stefan George - <stefan@gnosis.pm>
@@ -24,10 +23,7 @@ contract EtherToken is GnosisStandardToken {
      *  Public functions
      */
     /// @dev Buys tokens with Ether, exchanging them 1:1
-    function deposit()
-        public
-        payable
-    {
+    function deposit() public payable {
         balances[msg.sender] = balances[msg.sender].add(msg.value);
         totalTokens = totalTokens.add(msg.value);
         emit Deposit(msg.sender, msg.value);
@@ -35,9 +31,7 @@ contract EtherToken is GnosisStandardToken {
 
     /// @dev Sells tokens in exchange for Ether, exchanging them 1:1
     /// @param value Number of tokens to sell
-    function withdraw(uint value)
-        public
-    {
+    function withdraw(uint value) public {
         // Balance covers value
         balances[msg.sender] = balances[msg.sender].sub(value);
         totalTokens = totalTokens.sub(value);

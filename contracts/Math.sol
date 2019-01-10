@@ -1,16 +1,14 @@
-pragma solidity ^0.4.24;
-
+pragma solidity ^0.5.0;
 
 /// @title Math library - Allows calculation of logarithmic and exponential functions
 /// @author Alan Lu - <alan.lu@gnosis.pm>
 /// @author Stefan George - <stefan@gnosis.pm>
 library Math {
-
     /*
      *  Constants
      */
     // This is equal to 1 in our calculations
-    uint public constant ONE =  0x10000000000000000;
+    uint public constant ONE = 0x10000000000000000;
     uint public constant LN2 = 0xb17217f7d1cf79ac;
     uint public constant LOG2_E = 0x171547652b82fe177;
 
@@ -20,18 +18,13 @@ library Math {
     /// @dev Returns natural exponential function value of given x
     /// @param x x
     /// @return e**x
-    function exp(int x)
-        public
-        pure
-        returns (uint)
-    {
+    function exp(int x) public pure returns (uint) {
         // revert if x is > MAX_POWER, where
         // MAX_POWER = int(mp.floor(mp.log(mpf(2**256 - 1) / ONE) * ONE))
         require(x <= 2454971259878909886679);
         // return 0 if exp(x) is tiny, using
         // MIN_POWER = int(mp.floor(mp.log(mpf(1) / ONE) * ONE))
-        if (x < -818323753292969962227)
-            return 0;
+        if (x < -818323753292969962227) return 0;
         // Transform so that e^x -> 2^x
         x = x * int(ONE) / int(LN2);
         // 2^x = 2^whole(x) * 2^frac(x)
@@ -42,8 +35,7 @@ library Math {
         if (x >= 0) {
             shift = x / int(ONE);
             z = uint(x % int(ONE));
-        }
-        else {
+        } else {
             shift = x / int(ONE) - 1;
             z = ONE - uint(-x % int(ONE));
         }
@@ -94,30 +86,21 @@ library Math {
         zpow = zpow * z / ONE;
         result += 0x9c7 * zpow / ONE;
         if (shift >= 0) {
-            if (result >> (256-shift) > 0)
-                return (2**256-1);
+            if (result >> (256 - shift) > 0) return (2 ** 256 - 1);
             return result << shift;
-        }
-        else
-            return result >> (-shift);
+        } else return result >> (-shift);
     }
 
     /// @dev Returns natural logarithm value of given x
     /// @param x x
     /// @return ln(x)
-    function ln(uint x)
-        public
-        pure
-        returns (int)
-    {
+    function ln(uint x) public pure returns (int) {
         require(x > 0);
         // binary search for floor(log2(x))
         int ilog2 = floorLog2(x);
         int z;
-        if (ilog2 < 0)
-            z = int(x << uint(-ilog2));
-        else
-            z = int(x >> uint(ilog2));
+        if (ilog2 < 0) z = int(x << uint(-ilog2));
+        else z = int(x >> uint(ilog2));
         // z = x * 2^-⌊log₂x⌋
         // so 1 <= z < 2
         // and ln z = ln x - ⌊log₂x⌋/log₂e
@@ -155,20 +138,14 @@ library Math {
     /// @dev Returns base 2 logarithm value of given x
     /// @param x x
     /// @return logarithmic value
-    function floorLog2(uint x)
-        public
-        pure
-        returns (int lo)
-    {
+    function floorLog2(uint x) public pure returns (int lo) {
         lo = -64;
         int hi = 193;
         // I use a shift here instead of / 2 because it floors instead of rounding towards 0
         int mid = (hi + lo) >> 1;
-        while((lo + 1) < hi) {
-            if (mid < 0 && x << uint(-mid) < ONE || mid >= 0 && x >> uint(mid) < ONE)
-                hi = mid;
-            else
-                lo = mid;
+        while ((lo + 1) < hi) {
+            if (mid < 0 && x << uint(-mid) < ONE || mid >= 0 && x >> uint(mid) < ONE) hi = mid;
+            else lo = mid;
             mid = (hi + lo) >> 1;
         }
     }
@@ -176,27 +153,17 @@ library Math {
     /// @dev Returns maximum of an array
     /// @param nums Numbers to look through
     /// @return Maximum number
-    function max(int[] nums)
-        public
-        pure
-        returns (int maxNum)
-    {
+    function max(int[] memory nums) public pure returns (int maxNum) {
         require(nums.length > 0);
-        maxNum = -2**255;
-        for (uint i = 0; i < nums.length; i++)
-            if (nums[i] > maxNum)
-                maxNum = nums[i];
+        maxNum = -2 ** 255;
+        for (uint i = 0; i < nums.length; i++) if (nums[i] > maxNum) maxNum = nums[i];
     }
 
     /// @dev Returns whether an add operation causes an overflow
     /// @param a First addend
     /// @param b Second addend
     /// @return Did no overflow occur?
-    function safeToAdd(uint a, uint b)
-        internal
-        pure
-        returns (bool)
-    {
+    function safeToAdd(uint a, uint b) internal pure returns (bool) {
         return a + b >= a;
     }
 
@@ -204,11 +171,7 @@ library Math {
     /// @param a Minuend
     /// @param b Subtrahend
     /// @return Did no underflow occur?
-    function safeToSub(uint a, uint b)
-        internal
-        pure
-        returns (bool)
-    {
+    function safeToSub(uint a, uint b) internal pure returns (bool) {
         return a >= b;
     }
 
@@ -216,11 +179,7 @@ library Math {
     /// @param a First factor
     /// @param b Second factor
     /// @return Did no overflow occur?
-    function safeToMul(uint a, uint b)
-        internal
-        pure
-        returns (bool)
-    {
+    function safeToMul(uint a, uint b) internal pure returns (bool) {
         return b == 0 || a * b / b == a;
     }
 
@@ -228,11 +187,7 @@ library Math {
     /// @param a First addend
     /// @param b Second addend
     /// @return Sum
-    function add(uint a, uint b)
-        internal
-        pure
-        returns (uint)
-    {
+    function add(uint a, uint b) internal pure returns (uint) {
         require(safeToAdd(a, b));
         return a + b;
     }
@@ -241,11 +196,7 @@ library Math {
     /// @param a Minuend
     /// @param b Subtrahend
     /// @return Difference
-    function sub(uint a, uint b)
-        internal
-        pure
-        returns (uint)
-    {
+    function sub(uint a, uint b) internal pure returns (uint) {
         require(safeToSub(a, b));
         return a - b;
     }
@@ -254,11 +205,7 @@ library Math {
     /// @param a First factor
     /// @param b Second factor
     /// @return Product
-    function mul(uint a, uint b)
-        internal
-        pure
-        returns (uint)
-    {
+    function mul(uint a, uint b) internal pure returns (uint) {
         require(safeToMul(a, b));
         return a * b;
     }
@@ -267,11 +214,7 @@ library Math {
     /// @param a First addend
     /// @param b Second addend
     /// @return Did no overflow occur?
-    function safeToAdd(int a, int b)
-        internal
-        pure
-        returns (bool)
-    {
+    function safeToAdd(int a, int b) internal pure returns (bool) {
         return (b >= 0 && a + b >= a) || (b < 0 && a + b < a);
     }
 
@@ -279,11 +222,7 @@ library Math {
     /// @param a Minuend
     /// @param b Subtrahend
     /// @return Did no underflow occur?
-    function safeToSub(int a, int b)
-        internal
-        pure
-        returns (bool)
-    {
+    function safeToSub(int a, int b) internal pure returns (bool) {
         return (b >= 0 && a - b <= a) || (b < 0 && a - b > a);
     }
 
@@ -291,11 +230,7 @@ library Math {
     /// @param a First factor
     /// @param b Second factor
     /// @return Did no overflow occur?
-    function safeToMul(int a, int b)
-        internal
-        pure
-        returns (bool)
-    {
+    function safeToMul(int a, int b) internal pure returns (bool) {
         return (b == 0) || (a * b / b == a);
     }
 
@@ -303,11 +238,7 @@ library Math {
     /// @param a First addend
     /// @param b Second addend
     /// @return Sum
-    function add(int a, int b)
-        internal
-        pure
-        returns (int)
-    {
+    function add(int a, int b) internal pure returns (int) {
         require(safeToAdd(a, b));
         return a + b;
     }
@@ -316,11 +247,7 @@ library Math {
     /// @param a Minuend
     /// @param b Subtrahend
     /// @return Difference
-    function sub(int a, int b)
-        internal
-        pure
-        returns (int)
-    {
+    function sub(int a, int b) internal pure returns (int) {
         require(safeToSub(a, b));
         return a - b;
     }
@@ -329,11 +256,7 @@ library Math {
     /// @param a First factor
     /// @param b Second factor
     /// @return Product
-    function mul(int a, int b)
-        internal
-        pure
-        returns (int)
-    {
+    function mul(int a, int b) internal pure returns (int) {
         require(safeToMul(a, b));
         return a * b;
     }

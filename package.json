@@ -15,7 +15,8 @@
     "networks": "truffle networks",
     "compile": "eslint --fix . && eslint . && truffle compile",
     "restore": "rm -rf build && truffle compile && npm run networks-reset",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prettier": "prettier --write --tab-width 4 --print-width 120 '**/*.sol'"
   },
   "repository": {
     "type": "git",
