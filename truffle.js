@@ -14,9 +14,9 @@ if (!privateKey && !mnemonic) {
   mnemonic = DEFAULT_MNEMONIC
 }
 
-// Solidity compiler (solc) config:
+// Solc
 const solcUseDocker = process.env.SOLC_USE_DOCKER === 'true' || false
-const solcVersion = '0.4.25'
+const solcVersion = '0.5.0'
 
 // Gas price
 const gasPriceGWei = process.env.GAS_PRICE_GWEI || DEFAULT_GAS_PRICE_GWEI
