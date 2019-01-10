@@ -35,13 +35,13 @@ function truffleConfig ({
     _getProvider = url => {
       return () => {
         return new HDWalletProvider({
-          privateKeys: [ privateKey ],
+          privateKeys: [privateKey],
           url
         })
       }
     }
   } else {
-    console.log(mnemonic === DEFAULT_MNEMONIC ? 'Using default mnemonic' : 'Using custom mnemonic')    
+    console.log(mnemonic === DEFAULT_MNEMONIC ? 'Using default mnemonic' : 'Using custom mnemonic')
     _getProvider = url => {
       return () => {
         return new HDWalletProvider({ mnemonic, url })
@@ -101,6 +101,7 @@ function truffleConfig ({
   }
 
   if (compatibilityTruffle4) {
+    console.log('Truffle 4')
     // Truffle 4
     truffleConfig.solc = {
       optimizer: {
@@ -108,6 +109,7 @@ function truffleConfig ({
       }
     }
   } else {
+    console.log('Truffle 5 - solidity: ', solcVersion)
     // Truffle 5
     truffleConfig.compilers = {
       solc: {
