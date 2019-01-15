@@ -1,8 +1,9 @@
-pragma solidity ^0.4.24;
-import "./Token.sol";
+pragma solidity ^0.5.0;
+
 import "./Math.sol";
 import "./Proxy.sol";
 
+import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
 
 /**
  * Deprecated: Use Open Zeppeling one instead
@@ -22,7 +23,7 @@ contract StandardTokenData {
  * Deprecated: Use Open Zeppeling one instead
  */
 /// @title Standard token contract with overflow protection
-contract GnosisStandardToken is Token, StandardTokenData {
+contract GnosisStandardToken is IERC20, StandardTokenData {
     using Math for *;
 
     /*
