@@ -1,6 +1,6 @@
-pragma solidity ^0.4.24;
-import "./GnosisStandardToken.sol";
+pragma solidity ^0.5.0;
 
+import "./GnosisStandardToken.sol";
 
 /// @title Token contract - Token exchanging Ether 1:1
 /// @author Stefan George - <stefan@gnosis.pm>

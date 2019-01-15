@@ -1,5 +1,4 @@
-pragma solidity ^0.4.24;
-
+pragma solidity ^0.5.0;
 
 /// @title Math library - Allows calculation of logarithmic and exponential functions
 /// @author Alan Lu - <alan.lu@gnosis.pm>
@@ -176,7 +175,7 @@ library Math {
     /// @dev Returns maximum of an array
     /// @param nums Numbers to look through
     /// @return Maximum number
-    function max(int[] nums)
+    function max(int[] memory nums)
         public
         pure
         returns (int maxNum)
