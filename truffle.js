@@ -1,7 +1,7 @@
 const truffleConfig = require('./src/util/truffleConfig')
 
 const DEFAULT_GAS_PRICE_GWEI = 5
-const GAS_LIMIT = 8e6
+const GAS_LIMIT = 7e6
 const DEFAULT_MNEMONIC = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
 
 // Load env vars
@@ -16,7 +16,7 @@ if (!privateKey && !mnemonic) {
 
 // Solidity compiler (solc) config:
 const solcUseDocker = process.env.SOLC_USE_DOCKER === 'true' || false
-const solcVersion = '0.4.25'
+const solcVersion = '0.5.2'
 
 // Gas price
 const gasPriceGWei = process.env.GAS_PRICE_GWEI || DEFAULT_GAS_PRICE_GWEI
