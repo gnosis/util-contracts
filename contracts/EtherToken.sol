@@ -4,7 +4,7 @@ import "./GnosisStandardToken.sol";
 /// @title Token contract - Token exchanging Ether 1:1
 /// @author Stefan George - <stefan@gnosis.pm>
 contract EtherToken is GnosisStandardToken {
-    using Math for *;
+    using GnosisMath for *;
 
     /*
      *  Events

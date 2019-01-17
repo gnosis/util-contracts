@@ -20,7 +20,7 @@ contract StandardTokenData {
  */
 /// @title Standard token contract with overflow protection
 contract GnosisStandardToken is Token, StandardTokenData {
-    using Math for *;
+    using GnosisMath for *;
 
     /*
      *  Public functions

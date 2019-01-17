@@ -1,5 +1,5 @@
 async function migrate ({ artifacts, deployer, network }) {
-  const Math = artifacts.require('Math')
+  const Math = artifacts.require('GnosisMath')
   const EtherToken = artifacts.require('EtherToken')
 
   function getWethAddress () {
