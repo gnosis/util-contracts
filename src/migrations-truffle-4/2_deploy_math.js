@@ -1,5 +1,5 @@
 async function migrate ({ artifacts, deployer }) {
-  const Math = artifacts.require('Math')
+  const Math = artifacts.require('GnosisMath')
   return deployer.deploy(Math)
 }
 
