@@ -25,6 +25,14 @@
       "transactionHash": "0x0e8d602b350e2a896134d79b48b8a59488a0a70933d46c5736c47b468877be35"
     }
   },
+  "GnosisMath": {
+    "4": {
+      "events": {},
+      "links": {},
+      "address": "0xE47bB8cC387ea322F0bd25b6E04A190f1e090790",
+      "transactionHash": "0x7caed1d5f1ed4d61d9fe284b932b43af17daefe8fd674b8f89ea3d9d9b8e3e5b"
+    }
+  },
   "Math": {
     "1": {
       "events": {},
