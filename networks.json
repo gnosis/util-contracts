@@ -26,31 +26,17 @@
     }
   },
   "GnosisMath": {
+    "1": {
+      "events": {},
+      "links": {},
+      "address": "0x84d4cE28d3574d3364ADbB4a95a8F78D431D85fc",
+      "transactionHash": "0x1aeb8ee277cdc056de8bd6f2579160d0bcbb33b7d489d212835e34bbfbd8e3ec"
+    },
     "4": {
       "events": {},
       "links": {},
       "address": "0xE47bB8cC387ea322F0bd25b6E04A190f1e090790",
       "transactionHash": "0x7caed1d5f1ed4d61d9fe284b932b43af17daefe8fd674b8f89ea3d9d9b8e3e5b"
-    }
-  },
-  "Math": {
-    "1": {
-      "events": {},
-      "links": {},
-      "address": "0x3cfa9e4deaaf403956e9356b2b0b423b74b4ceac",
-      "transactionHash": "0x6d37e57c73c5fe3508449c84e1c6659c613180a65a6416eccd1d14defede8fcf"
-    },
-    "4": {
-      "events": {},
-      "links": {},
-      "address": "0x1b8211bc90f3a77c451a853cadeb8673cc1263c9",
-      "transactionHash": "0x91e6c8d3acc9753732108d153afbc22fd77d2b6e4eb7978c31999a2b63cdc3a3"
-    },
-    "42": {
-      "events": {},
-      "links": {},
-      "address": "0x38a21406d226785b39033319a00a328d5c0109aa",
-      "transactionHash": "0x44e219379708c15fe63d842a3f44cb7fdfaef9dee30c3994202cc14fd9df87ec"
     }
   },
   "Migrations": {
