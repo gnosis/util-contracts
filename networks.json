@@ -37,6 +37,12 @@
       "links": {},
       "address": "0xE47bB8cC387ea322F0bd25b6E04A190f1e090790",
       "transactionHash": "0x7caed1d5f1ed4d61d9fe284b932b43af17daefe8fd674b8f89ea3d9d9b8e3e5b"
+    },
+    "42": {
+      "events": {},
+      "links": {},
+      "address": "0x1d92E26349dde1C38f072be0853188DFB095cF56",
+      "transactionHash": "0x7410103890b2841025031781c0de0bc93c7d87d78a3cd8c5eaf0c368d7d2f708"
     }
   },
   "Migrations": {
