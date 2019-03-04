@@ -5,7 +5,7 @@ const DEFAULT_GAS_PRICE_GWEI = 5
 const GAS_LIMIT = 5e6
 const DEFAULT_MNEMONIC = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
 
-function truffleConfig({
+function truffleConfig ({
   mnemonic,
   privateKey,
   gasPriceGWei = DEFAULT_GAS_PRICE_GWEI,
@@ -114,7 +114,7 @@ function truffleConfig({
     truffleConfig.compilers = {
       solc: {
         version: solcVersion,
-        //docker: solcUseDocker,
+        // docker: solcUseDocker,
         settings: {
           optimizer: {
             enabled: optimizedEnabled, // Default: false
