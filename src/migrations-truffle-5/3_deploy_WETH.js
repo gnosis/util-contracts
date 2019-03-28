@@ -1,14 +1,10 @@
 async function migrate ({ artifacts, deployer, network }) {
-  const Math = artifacts.require('GnosisMath')
   const EtherToken = artifacts.require('EtherToken')
 
   const wethAddress = _getWethAddress(EtherToken)
   if (!wethAddress) {
     console.log(`Deploying WETH contract, because the network "${network}" doesn't have any WETH address configured`)
     // deploy EtherToken (WETH)
-
-    console.log('Link Math lib into EtherToken')
-    await deployer.link(Math, EtherToken)
 
     console.log('Deploy EtherToken')
     await deployer.deploy(EtherToken)
