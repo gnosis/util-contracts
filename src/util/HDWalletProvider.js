@@ -1,6 +1,5 @@
 const TruffleHDWalletProvider = require('truffle-hdwallet-provider')
 const Web3 = require('web3')
-console.log('Create HDWalletProvider')
 
 class HDWalletProvider extends TruffleHDWalletProvider {
   constructor ({ mnemonic, privateKeys, url, blockForNonceCalculation = 'pending' }) { // latest

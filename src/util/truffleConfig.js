@@ -21,17 +21,18 @@ function truffleConfig ({
   solcUseDocker = false,
   solcVersion = '0.4.25',
   // Just a temporal flag to support truffle 4 config
-  compatibilityTruffle4 = false
+  compatibilityTruffle4 = false,
+  debug = () => { }
 }) {
   assert(mnemonic || privateKey, 'The mnemonic or privateKey has not been provided')
-  console.log(`Using gas limit: ${gas / 1000} K`)
-  console.log(`Using gas price: ${gasPriceGWei} Gwei`)
-  console.log(`Optimizer enabled: ${optimizedEnabled}`)
-  console.log('Sign transactions using: %s', mnemonic ? 'Mnemonic' : 'Private Key')
+  debug(`Using gas limit: ${gas / 1000} K`)
+  debug(`Using gas price: ${gasPriceGWei} Gwei`)
+  debug(`Optimizer enabled: ${optimizedEnabled}`)
+  debug('Sign transactions using: %s', mnemonic ? 'Mnemonic' : 'Private Key')
 
   let _getProvider
   if (privateKey) {
-    console.log('Using private key')
+    debug('Using private key')
     _getProvider = url => {
       return () => {
         return new HDWalletProvider({
@@ -41,7 +42,7 @@ function truffleConfig ({
       }
     }
   } else {
-    console.log(mnemonic === DEFAULT_MNEMONIC ? 'Using default mnemonic' : 'Using custom mnemonic')
+    debug(mnemonic === DEFAULT_MNEMONIC ? 'Using default mnemonic' : 'Using custom mnemonic')
     _getProvider = url => {
       return () => {
         return new HDWalletProvider({ mnemonic, url })
@@ -101,7 +102,7 @@ function truffleConfig ({
   }
 
   if (compatibilityTruffle4) {
-    console.log('Truffle 4')
+    debug('Truffle 4')
     // Truffle 4
     truffleConfig.solc = {
       optimizer: {
@@ -109,7 +110,7 @@ function truffleConfig ({
       }
     }
   } else {
-    console.log('Truffle 5 - solidity: %s, useDocker: %s', solcVersion, solcUseDocker)
+    debug('Truffle 5 - solidity: %s, useDocker: %s', solcVersion, solcUseDocker)
     // Truffle 5
     truffleConfig.compilers = {
       solc: {
