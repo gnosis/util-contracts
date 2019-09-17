@@ -5,12 +5,12 @@ const DEFAULT_GAS_PRICE_GWEI = 5
 const GAS_LIMIT = 5e6
 const DEFAULT_MNEMONIC = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
 
-function truffleConfig ({
+function truffleConfig({
   mnemonic,
   privateKey,
   gasPriceGWei = DEFAULT_GAS_PRICE_GWEI,
   gas = GAS_LIMIT,
-  aditionalNetwork,
+  additionalNetwork,
   optimizedEnabled = true,
   urlKovan = 'https://kovan.infura.io/',
   urlRinkeby = 'https://rinkeby.infura.io/', // 'http://node.rinkeby.gnosisdev.com:443',
@@ -82,13 +82,20 @@ function truffleConfig ({
       network_id: '3',
       gas,
       gasPrice
+    },
+    coverage: {
+      host: "localhost",
+      network_id: "*",
+      port: 8555,         // <-- If you change this, also set the port option in .solcover.js.
+      gas,
+      gasPrice
     }
   }
 
-  if (aditionalNetwork) {
-    // Add an aditional network
+  if (additionalNetwork) {
+    // Add an additional network
     // Useful, for example to better integration with docker-compose connectivity
-    const { name, url, networkId, gas, gasPrice } = aditionalNetwork
+    const { name, url, networkId, gas, gasPrice } = additionalNetwork
     networks[name] = {
       provider: _getProvider(url),
       network_id: networkId,
@@ -120,8 +127,8 @@ function truffleConfig ({
           optimizer: {
             enabled: optimizedEnabled, // Default: false
             runs: 200
-          }
-          // evmVersion: "byzantium"  // Default: "byzantium". Others:  "homestead", ...
+          },
+          evmVersion: "byzantium"  // Default: "byzantium". Others:  "homestead", ...
         }
       }
     }
