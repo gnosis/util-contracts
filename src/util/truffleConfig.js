@@ -127,8 +127,8 @@ function truffleConfig({
           optimizer: {
             enabled: optimizedEnabled, // Default: false
             runs: 200
-          },
-          evmVersion: "byzantium"  // Default: "byzantium". Others:  "homestead", ...
+          }
+          // evmVersion: "byzantium"  // Default: "byzantium". Others:  "homestead", ...
         }
       }
     }
