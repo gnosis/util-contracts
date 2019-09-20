@@ -5,6 +5,8 @@ const DEFAULT_GAS_PRICE_GWEI = 5
 const GAS_LIMIT = 5e6
 const DEFAULT_MNEMONIC = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
 
+const { NETWORK_IDS } = require("./networkUtils")
+
 function truffleConfig({
   mnemonic,
   privateKey,
@@ -51,6 +53,7 @@ function truffleConfig({
   }
   const gasPrice = gasPriceGWei * 1e9
 
+
   const networks = {
     development: {
       host: urlDevelopment,
@@ -61,31 +64,31 @@ function truffleConfig({
     },
     mainnet: {
       provider: _getProvider(urlMainnet),
-      network_id: '1',
+      network_id: NETWORK_IDS["mainnet"].network_id,
       gas,
       gasPrice
     },
     kovan: {
       provider: _getProvider(urlKovan),
-      network_id: '42',
+      network_id: NETWORK_IDS["kovan"].network_id,
       gas,
       gasPrice
     },
     rinkeby: {
       provider: _getProvider(urlRinkeby),
-      network_id: '4',
+      network_id: NETWORK_IDS["rinkeby"].network_id,
       gas,
       gasPrice
     },
     ropsten: {
       provider: _getProvider(urlRopsten),
-      network_id: '3',
+      network_id: NETWORK_IDS["ropsten"].network_id,
       gas,
       gasPrice
     },
     coverage: {
       host: "localhost",
-      network_id: "*",
+      network_id: NETWORK_IDS["coverage"].network_id,
       port: 8555,         // <-- If you change this, also set the port option in .solcover.js.
       gas: 0xfffffffffff, // <-- Use this high gas value
       gasPrice: 0x01      // <-- Use this low gas price

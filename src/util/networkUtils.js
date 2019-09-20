@@ -1,7 +1,28 @@
 const fs = require('fs')
 const path = require('path')
 
-async function getNetworkInfo (buildPath) {
+const NETWORK_IDS = {
+  development: {
+    network_id: '*'
+  },
+  mainnet: {
+    network_id: '1',
+  },
+  kovan: {
+    network_id: '42'
+  },
+  rinkeby: {
+    network_id: '4'
+  },
+  ropsten: {
+    network_id: '3'
+  },
+  coverage: {
+    network_id: "*"
+  }
+}
+
+async function getNetworkInfo(buildPath) {
   // Get contracts from the build path
   const contracts = await _getContracts(buildPath)
 
@@ -20,7 +41,7 @@ async function getNetworkInfo (buildPath) {
     })
 }
 
-async function updateBuiltContract ({
+async function updateBuiltContract({
   buildPath,
   networkFilePath,
   override
@@ -29,7 +50,7 @@ async function updateBuiltContract ({
   return _updateBuiltContract({ buildPath, networkObj })
 }
 
-async function updateBuiltContractWithInfo ({
+async function updateBuiltContractWithInfo({
   buildPath,
   networkInfo,
   override
@@ -38,20 +59,20 @@ async function updateBuiltContractWithInfo ({
   return _updateBuiltContract({ buildPath, networkObj, override })
 }
 
-function writeNetworksJson (networkInfo, networkFilePath) {
+function writeNetworksJson(networkInfo, networkFilePath) {
   const networkObject = toNetworkObject(networkInfo)
   const jsonContent = JSON.stringify(networkObject, null, 2) + '\n'
   fs.writeFileSync(networkFilePath, jsonContent)
 }
 
-function toNetworkObject (networkInfo) {
+function toNetworkObject(networkInfo) {
   return networkInfo.reduce((acc, contract) => {
     acc[contract.name] = contract.networks
     return acc
   }, {})
 }
 
-async function _updateBuiltContract ({
+async function _updateBuiltContract({
   buildPath,
   networkObj,
   override = true,
@@ -102,7 +123,7 @@ async function _updateBuiltContract ({
   }
 }
 
-async function _getContracts (buildPath) {
+async function _getContracts(buildPath) {
   const dirFiles = fs.readdirSync(buildPath)
   const fileNames = dirFiles.filter(fname => fname.endsWith('.json'))
 
@@ -121,5 +142,6 @@ module.exports = {
   writeNetworksJson,
   updateBuiltContract,
   updateBuiltContractWithInfo,
-  toNetworkObject
+  toNetworkObject,
+  NETWORK_IDS
 }
