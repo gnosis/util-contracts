@@ -48,6 +48,6 @@
     "solc": "0.5.8",
     "truffle": "^5.0.2",
     "truffle-contract": "^4.0.17",
-    "truffle-hdwallet-provider": "^1.0.0-web3one.1"
+    "@truffle/hdwallet-provider": "^1.0.27"
   }
 }
