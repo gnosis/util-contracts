@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/util-contracts",
-  "version": "2.0.3",
+  "version": "2.0.5",
   "description": "Utility contracts for Gnosis",
   "main": "index.js",
   "scripts": {
@@ -47,7 +47,9 @@
     "prettier-plugin-solidity-refactor": "^1.0.0-alpha.12",
     "solc": "0.5.8",
     "truffle": "^5.0.2",
-    "truffle-contract": "^4.0.17",
-    "truffle-hdwallet-provider": "^1.0.0-web3one.1"
+    "@truffle/contract": "^4.1.2"
+  },
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.0.27"
   }
 }
