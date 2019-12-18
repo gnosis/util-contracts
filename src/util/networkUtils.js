@@ -46,6 +46,10 @@ function writeNetworksJson (networkInfo, networkFilePath) {
 
 function toNetworkObject (networkInfo) {
   return networkInfo.reduce((acc, contract) => {
+    // Pruning unnecessary event data from network info
+    for (const networkId of Object.keys(contract.networks)) {
+      delete contract.networks[networkId]['events']
+    }
     acc[contract.name] = contract.networks
     return acc
   }, {})
