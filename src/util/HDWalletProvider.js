@@ -2,7 +2,7 @@ const TruffleHDWalletProvider = require('@truffle/hdwallet-provider')
 const Web3 = require('web3')
 
 class HDWalletProvider extends TruffleHDWalletProvider {
-  constructor({ mnemonic, privateKeys, url, blockForNonceCalculation = 'pending' }) { // latest
+  constructor ({ mnemonic, privateKeys, url, blockForNonceCalculation = 'pending' }) { // latest
     // console.log('[HDWalletProvider] New provider for: %s', url)
     const accountCredentials = privateKeys || mnemonic
     super(accountCredentials, url)
@@ -12,7 +12,7 @@ class HDWalletProvider extends TruffleHDWalletProvider {
     // console.log('[HDWalletProvider] Wallet address: ', this._address)
   }
 
-  sendAsync(params) {
+  sendAsync (params) {
     let options
     if (Array.isArray(params)) {
       options = params[0]
@@ -41,11 +41,11 @@ class HDWalletProvider extends TruffleHDWalletProvider {
     }
   }
 
-  _sendAsyncWithNonce() {
+  _sendAsyncWithNonce () {
     return super.sendAsync()
   }
 
-  send() {
+  send () {
     // console.log('[HDWalletProvider] Intercepting send: ', arguments)
     return super.send(...arguments)
   }
