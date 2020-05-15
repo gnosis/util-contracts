@@ -4,6 +4,7 @@ module.exports = {
   rules: {
     strict: 0,
     'arrow-parens': [2, 'as-needed'],
+    'no-undef': "error",
   },
   env: {
     es6: true,
