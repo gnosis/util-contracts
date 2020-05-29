@@ -8,12 +8,19 @@ contract StorageAccessibleWrapper is StorageAccessible {
         uint256 bar;
     }
 
-    uint256 foo; // slot 0
-    uint128 bar; // slot 1
-    uint64 bam; // slot 1
-    uint256[] baz; // slot 2
-    mapping(uint256 => uint256) qux; // slot 3
-    FooBar foobar; // slot 4 & 5
+    uint8 public constant SLOT_FOO = 0;
+    uint8 public constant SLOT_BAR = 1;
+    uint8 public constant SLOT_BAM = 1;
+    uint8 public constant SLOT_BAZ = 2;
+    uint8 public constant SLOT_QUX = 3;
+    uint8 public constant SLOT_FOOBAR = 4;
+
+    uint256 foo;
+    uint128 bar;
+    uint64 bam;
+    uint256[] baz;
+    mapping(uint256 => uint256) qux;
+    FooBar foobar;
 
     constructor() public {}
 
