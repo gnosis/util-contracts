@@ -4,7 +4,7 @@ pragma solidity ^0.5.2;
 /// @title StorageAccessible - generic base contract that allows callers to access all internal storage.
 contract StorageAccessible {
     /**
-     * @dev Reads `length` bytes of storage in the currents contract\\
+     * @dev Reads `length` bytes of storage in the currents contract
      * @param offset - the offset in the current contract's storage in words to start reading from
      * @param length - the number of words (32 bytes) of data to read
      * @return the bytes that were read.
