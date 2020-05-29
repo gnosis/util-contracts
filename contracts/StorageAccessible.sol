@@ -23,4 +23,41 @@ contract StorageAccessible {
         }
         return result;
     }
+
+    /**
+     * @dev Performs a delegetecall on a targetContract in the context of self.
+     * Internally reverts execution to avoid side effects (making it static). Catches revert and returns encoded result as bytes.
+     * @param targetContract Address of the contract containing the code to execute.
+     * @param calldataPayload Calldata that should be sent to the target contract (encoded method name and arguments).
+     */
+    function executeStaticDelegatecall(
+        address targetContract,
+        bytes memory calldataPayload
+    ) public returns (bytes memory) {
+        bytes memory innerCall = abi.encodeWithSignature(
+            "executeStaticDelegatecallInternal(address,bytes)",
+            targetContract,
+            calldataPayload
+        );
+        (, bytes memory response) = address(this).call(innerCall);
+        return response;
+    }
+
+    /**
+     * @dev Performs a delegetecall on a targetContract in the context of self.
+     * Internally reverts execution to avoid side effects (making it static). Returns encoded result as revert message.
+     * @param targetContract Address of the contract containing the code to execute.
+     * @param calldataPayload Calldata that should be sent to the target contract (encoded method name and arguments).
+     */
+    function executeStaticDelegatecallInternal(
+        address targetContract,
+        bytes memory calldataPayload
+    ) public returns (bytes memory) {
+        (, bytes memory response) = targetContract.delegatecall(
+            calldataPayload
+        );
+        assembly {
+            revert(add(response, 0x20), mload(response))
+        }
+    }
 }

@@ -48,3 +48,23 @@ contract StorageAccessibleWrapper is StorageAccessible {
         foobar = FooBar({foo: foo_, bar: bar_});
     }
 }
+
+
+/**
+ * Defines reader methods on StorageAccessibleWrapper that can be later executed
+ * in the context of a previously deployed instance
+ */
+contract ExternalStorageReader {
+    // Needs same storage layout as the contract it is reading from
+    uint256 foo;
+
+    function getFoo() public view returns (uint256) {
+        return foo;
+    }
+
+    function replaceFoo(uint256 foo_) public returns (uint256) {
+        uint256 tmp = foo;
+        foo = foo_;
+        return tmp;
+    }
+}
