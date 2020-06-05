@@ -1,6 +1,8 @@
 const StorageAccessibleWrapper = artifacts.require('StorageAccessibleWrapper')
 const ExternalStorageReader = artifacts.require('ExternalStorageReader')
 
+const truffleAssert = require('truffle-assertions')
+
 contract('StorageAccessible', () => {
   const fromHex = string => parseInt(string, 16)
   const keccak = numbers => web3.utils.soliditySha3(
@@ -78,6 +80,14 @@ contract('StorageAccessible', () => {
       const getFooCall = reader.contract.methods.getFoo().encodeABI()
       result = await instance.simulateDelegatecall.call(reader.address, getFooCall)
       assert.equal(42, fromHex(result))
+    })
+
+    it('can simulate a function that reverts', async () => {
+      const instance = await StorageAccessibleWrapper.new()
+
+      const reader = await ExternalStorageReader.new()
+      const doRevertCall = reader.contract.methods.doRevert().encodeABI()
+      truffleAssert.reverts(instance.simulateDelegatecall.call(reader.address), doRevertCall)
     })
   })
 })

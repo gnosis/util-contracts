@@ -66,4 +66,8 @@ contract ExternalStorageReader {
         foo = foo_;
         return foo;
     }
+
+    function doRevert() public pure {
+        revert("Foo");
+    }
 }
