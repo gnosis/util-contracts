@@ -62,9 +62,8 @@ contract ExternalStorageReader {
         return foo;
     }
 
-    function replaceFoo(uint256 foo_) public returns (uint256) {
-        uint256 tmp = foo;
+    function setAndGetFoo(uint256 foo_) public returns (uint256) {
         foo = foo_;
-        return tmp;
+        return foo;
     }
 }

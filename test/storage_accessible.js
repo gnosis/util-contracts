@@ -68,11 +68,11 @@ contract('StorageAccessible', () => {
       const instance = await StorageAccessibleWrapper.new()
       await instance.setFoo(42)
 
-      // Deploy and use reader contract to get and replace foo
+      // Deploy and use reader contract to simulate setting foo
       const reader = await ExternalStorageReader.new()
-      const replaceFooCall = reader.contract.methods.replaceFoo(69).encodeABI()
+      const replaceFooCall = reader.contract.methods.setAndGetFoo(69).encodeABI()
       let result = await instance.simulateDelegatecall.call(reader.address, replaceFooCall)
-      assert.equal(42, fromHex(result))
+      assert.equal(69, fromHex(result))
 
       // Make sure foo is not actually changed
       const getFooCall = reader.contract.methods.getFoo().encodeABI()
