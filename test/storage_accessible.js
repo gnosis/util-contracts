@@ -52,7 +52,7 @@ contract('StorageAccessible', () => {
     })
   })
 
-  describe.only('executeStaticDelegatecall', async () => {
+  describe.only('simulateDelegatecall', async () => {
     it('can invoke a function in the context of a previously deployed contract', async () => {
       const instance = await StorageAccessibleWrapper.new()
       await instance.setFoo(42)
@@ -60,7 +60,7 @@ contract('StorageAccessible', () => {
       // Deploy and use reader contract to access foo
       const reader = await ExternalStorageReader.new()
       const getFooCall = reader.contract.methods.getFoo().encodeABI()
-      const result = await instance.executeStaticDelegatecall.call(reader.address, getFooCall)
+      const result = await instance.simulateDelegatecall.call(reader.address, getFooCall)
       assert.equal(42, fromHex(result))
     })
 
@@ -71,12 +71,12 @@ contract('StorageAccessible', () => {
       // Deploy and use reader contract to get and replace foo
       const reader = await ExternalStorageReader.new()
       const replaceFooCall = reader.contract.methods.replaceFoo(69).encodeABI()
-      let result = await instance.executeStaticDelegatecall.call(reader.address, replaceFooCall)
+      let result = await instance.simulateDelegatecall.call(reader.address, replaceFooCall)
       assert.equal(42, fromHex(result))
 
       // Make sure foo is not actually changed
       const getFooCall = reader.contract.methods.getFoo().encodeABI()
-      result = await instance.executeStaticDelegatecall.call(reader.address, getFooCall)
+      result = await instance.simulateDelegatecall.call(reader.address, getFooCall)
       assert.equal(42, fromHex(result))
     })
   })

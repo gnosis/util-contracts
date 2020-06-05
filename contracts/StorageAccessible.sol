@@ -30,12 +30,12 @@ contract StorageAccessible {
      * @param targetContract Address of the contract containing the code to execute.
      * @param calldataPayload Calldata that should be sent to the target contract (encoded method name and arguments).
      */
-    function executeStaticDelegatecall(
+    function simulateDelegatecall(
         address targetContract,
         bytes memory calldataPayload
     ) public returns (bytes memory) {
         bytes memory innerCall = abi.encodeWithSignature(
-            "executeStaticDelegatecallInternal(address,bytes)",
+            "simulateDelegatecallInternal(address,bytes)",
             targetContract,
             calldataPayload
         );
@@ -49,7 +49,7 @@ contract StorageAccessible {
      * @param targetContract Address of the contract containing the code to execute.
      * @param calldataPayload Calldata that should be sent to the target contract (encoded method name and arguments).
      */
-    function executeStaticDelegatecallInternal(
+    function simulateDelegatecallInternal(
         address targetContract,
         bytes memory calldataPayload
     ) public returns (bytes memory) {
