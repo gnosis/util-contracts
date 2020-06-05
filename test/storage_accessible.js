@@ -87,7 +87,7 @@ contract('StorageAccessible', () => {
 
       const reader = await ExternalStorageReader.new()
       const doRevertCall = reader.contract.methods.doRevert().encodeABI()
-      truffleAssert.reverts(instance.simulateDelegatecall.call(reader.address), doRevertCall)
+      truffleAssert.reverts(instance.simulateDelegatecall.call(reader.address, doRevertCall))
     })
   })
 })
