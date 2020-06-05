@@ -52,7 +52,7 @@ contract('StorageAccessible', () => {
     })
   })
 
-  describe.only('simulateDelegatecall', async () => {
+  describe('simulateDelegatecall', async () => {
     it('can invoke a function in the context of a previously deployed contract', async () => {
       const instance = await StorageAccessibleWrapper.new()
       await instance.setFoo(42)

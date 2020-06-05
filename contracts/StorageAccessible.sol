@@ -3,6 +3,10 @@ pragma solidity ^0.5.2;
 
 /// @title StorageAccessible - generic base contract that allows callers to access all internal storage.
 contract StorageAccessible {
+    bytes4 public constant SIMULATE_DELEGATECALL_INTERNAL_SELECTOR = bytes4(
+        keccak256("simulateDelegatecallInternal(address,bytes)")
+    );
+
     /**
      * @dev Reads `length` bytes of storage in the currents contract
      * @param offset - the offset in the current contract's storage in words to start reading from
@@ -34,8 +38,8 @@ contract StorageAccessible {
         address targetContract,
         bytes memory calldataPayload
     ) public returns (bytes memory) {
-        bytes memory innerCall = abi.encodeWithSignature(
-            "simulateDelegatecallInternal(address,bytes)",
+        bytes memory innerCall = abi.encodeWithSelector(
+            SIMULATE_DELEGATECALL_INTERNAL_SELECTOR,
             targetContract,
             calldataPayload
         );
