@@ -1,7 +1,6 @@
 pragma solidity ^0.5.2;
 import "../StorageAccessible.sol";
 
-
 contract StorageAccessibleWrapper is StorageAccessible {
     struct FooBar {
         uint256 foo;
@@ -49,7 +48,6 @@ contract StorageAccessibleWrapper is StorageAccessible {
     }
 }
 
-
 /**
  * Defines reader methods on StorageAccessibleWrapper that can be later executed
  * in the context of a previously deployed instance
@@ -69,5 +67,16 @@ contract ExternalStorageReader {
 
     function doRevert() public pure {
         revert("Foo");
+    }
+
+    function invokeDoRevertViaStorageAccessible(StorageAccessible target)
+        public
+        returns (bytes memory)
+    {
+        return
+            target.simulateDelegatecall(
+                address(this),
+                abi.encodeWithSignature("doRevert()")
+            );
     }
 }

@@ -89,5 +89,12 @@ contract('StorageAccessible', () => {
       const doRevertCall = reader.contract.methods.doRevert().encodeABI()
       truffleAssert.reverts(instance.simulateDelegatecall.call(reader.address, doRevertCall))
     })
+
+    it('allows detection of reverts when invoked from other smart contract', async () => {
+      const instance = await StorageAccessibleWrapper.new()
+
+      const reader = await ExternalStorageReader.new()
+      truffleAssert.reverts(reader.invokeDoRevertViaStorageAccessible(instance.address))
+    })
   })
 })

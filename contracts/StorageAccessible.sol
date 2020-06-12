@@ -1,6 +1,5 @@
 pragma solidity ^0.5.2;
 
-
 /// @title StorageAccessible - generic base contract that allows callers to access all internal storage.
 contract StorageAccessible {
     bytes4 public constant SIMULATE_DELEGATECALL_INTERNAL_SELECTOR = bytes4(
@@ -44,7 +43,13 @@ contract StorageAccessible {
             calldataPayload
         );
         (, bytes memory response) = address(this).call(innerCall);
-        return response;
+        // We try to detect if the delegatecall itself reverted (with a reason string).
+        // In this case we use this reason to revert the top level call.
+        if (isRevert(response)) {
+            revertWith(response);
+        } else {
+            return response;
+        }
     }
 
     /**
@@ -60,6 +65,19 @@ contract StorageAccessible {
         (, bytes memory response) = targetContract.delegatecall(
             calldataPayload
         );
+        revertWith(response);
+    }
+
+    function isRevert(bytes memory result) public pure returns (bool) {
+        return
+            result.length > 4 &&
+            result[0] == 0x08 &&
+            result[1] == 0xc3 &&
+            result[2] == 0x79 &&
+            result[3] == 0xa0;
+    }
+
+    function revertWith(bytes memory response) public pure {
         assembly {
             revert(add(response, 0x20), mload(response))
         }
