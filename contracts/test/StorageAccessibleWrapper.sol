@@ -66,7 +66,7 @@ contract ExternalStorageReader {
     }
 
     function doRevert() public pure {
-        revert("Foo");
+        revert();
     }
 
     function invokeDoRevertViaStorageAccessible(StorageAccessible target)

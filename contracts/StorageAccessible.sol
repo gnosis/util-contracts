@@ -43,12 +43,12 @@ contract StorageAccessible {
             calldataPayload
         );
         (, bytes memory response) = address(this).call(innerCall);
-        // We try to detect if the delegatecall itself reverted (with a reason string).
-        // In this case we use this reason to revert the top level call.
-        if (isRevert(response)) {
-            revertWith(response);
-        } else {
+        bool innerSuccess = response[response.length - 1] == 0x01;
+        setLength(response, response.length - 1);
+        if (innerSuccess) {
             return response;
+        } else {
+            revertWith(response);
         }
     }
 
@@ -62,25 +62,21 @@ contract StorageAccessible {
         address targetContract,
         bytes memory calldataPayload
     ) public returns (bytes memory) {
-        (, bytes memory response) = targetContract.delegatecall(
+        (bool success, bytes memory response) = targetContract.delegatecall(
             calldataPayload
         );
-        revertWith(response);
-    }
-
-    function isRevert(bytes memory result) public pure returns (bool) {
-        // Check if result starts with the method selector "Error(string)"
-        return
-            result.length > 4 &&
-            result[0] == 0x08 &&
-            result[1] == 0xc3 &&
-            result[2] == 0x79 &&
-            result[3] == 0xa0;
+        revertWith(abi.encodePacked(response, success));
     }
 
     function revertWith(bytes memory response) public pure {
         assembly {
             revert(add(response, 0x20), mload(response))
+        }
+    }
+
+    function setLength(bytes memory buffer, uint256 length) public pure {
+        assembly {
+            mstore(buffer, length)
         }
     }
 }
