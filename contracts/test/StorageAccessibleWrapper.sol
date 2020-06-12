@@ -71,12 +71,10 @@ contract ExternalStorageReader {
 
     function invokeDoRevertViaStorageAccessible(StorageAccessible target)
         public
-        returns (bytes memory)
     {
-        return
-            target.simulateDelegatecall(
-                address(this),
-                abi.encodeWithSignature("doRevert()")
-            );
+        target.simulateDelegatecall(
+            address(this),
+            abi.encodeWithSignature("doRevert()")
+        );
     }
 }
