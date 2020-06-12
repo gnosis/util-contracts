@@ -54,7 +54,8 @@ contract StorageAccessible {
 
     /**
      * @dev Performs a delegetecall on a targetContract in the context of self.
-     * Internally reverts execution to avoid side effects (making it static). Returns encoded result as revert message.
+     * Internally reverts execution to avoid side effects (making it static). Returns encoded result as revert message
+     * concatenated with the success flag of the inner call as a last byte.
      * @param targetContract Address of the contract containing the code to execute.
      * @param calldataPayload Calldata that should be sent to the target contract (encoded method name and arguments).
      */
