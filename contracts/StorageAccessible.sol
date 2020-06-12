@@ -69,6 +69,7 @@ contract StorageAccessible {
     }
 
     function isRevert(bytes memory result) public pure returns (bool) {
+        // Check if result starts with the method selector "Error(string)"
         return
             result.length > 4 &&
             result[0] == 0x08 &&
