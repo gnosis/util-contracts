@@ -16,7 +16,7 @@ function truffleConfig ({
   urlRinkeby = 'https://rinkeby.infura.io/', // 'http://node.rinkeby.gnosisdev.com:443',
   urlRopsten = 'https://ropsten.infura.io',
   urlMainnet = 'https://mainnet.infura.io',
-  urlXdai = 'https://xdai.poanetwork.dev ',
+  urlXdai = 'https://xdai.poanetwork.dev',
   urlDevelopment = 'localhost',
   portDevelopment = 8545,
   solcUseDocker = false,
