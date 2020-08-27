@@ -16,6 +16,7 @@ function truffleConfig ({
   urlRinkeby = 'https://rinkeby.infura.io/', // 'http://node.rinkeby.gnosisdev.com:443',
   urlRopsten = 'https://ropsten.infura.io',
   urlMainnet = 'https://mainnet.infura.io',
+  urlXdai = 'https://xdai.poanetwork.dev',
   urlDevelopment = 'localhost',
   portDevelopment = 8545,
   solcUseDocker = false,
@@ -62,6 +63,12 @@ function truffleConfig ({
     mainnet: {
       provider: _getProvider(urlMainnet),
       network_id: '1',
+      gas,
+      gasPrice
+    },
+    xdai: {
+      provider: _getProvider(urlXdai),
+      network_id: '100',
       gas,
       gasPrice
     },

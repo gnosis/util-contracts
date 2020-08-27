@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/util-contracts",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "Utility contracts for Gnosis",
   "main": "index.js",
   "scripts": {
@@ -50,6 +50,6 @@
     "@truffle/contract": "^4.1.2"
   },
   "dependencies": {
-    "@truffle/hdwallet-provider": "^1.0.27"
+    "@truffle/hdwallet-provider": "^1.0.42"
   }
 }
