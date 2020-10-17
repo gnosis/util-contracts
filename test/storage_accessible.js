@@ -98,7 +98,7 @@ contract('StorageAccessible', () => {
     })
   })
 
-  describe.only('simulateStaticDelegatecall', () => {
+  describe('simulateStaticDelegatecall', () => {
     it('can be called from a static context', async () => {
       const instance = await StorageAccessibleWrapper.new()
       await instance.setFoo(42)
@@ -107,6 +107,15 @@ contract('StorageAccessible', () => {
       // invokeStaticDelegatecall is marked as view
       const result = await reader.invokeStaticDelegatecall(instance.address)
       assert.equal(42, result)
+    })
+
+    it('cannot simulate state changes', async () => {
+      const instance = await StorageAccessibleWrapper.new()
+      await instance.setFoo(42)
+
+      const reader = await ExternalStorageReader.new()
+      const replaceFooCall = reader.contract.methods.setAndGetFoo(69).encodeABI()
+      truffleAssert.reverts(instance.simulateStaticDelegatecall(reader.address, replaceFooCall))
     })
   })
 })
