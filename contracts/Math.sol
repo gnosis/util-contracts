@@ -1,4 +1,4 @@
-pragma solidity ^0.5.2;
+pragma solidity ^0.6.0;
 
 /// @title Math library - Allows calculation of logarithmic and exponential functions
 /// @author Alan Lu - <alan.lu@gnosis.pm>
@@ -137,7 +137,7 @@ library GnosisMath {
 
     /// @dev Returns base 2 logarithm value of given x
     /// @param x x
-    /// @return logarithmic value
+    /// @return lo logarithmic value
     function floorLog2(uint x) public pure returns (int lo) {
         lo = -64;
         int hi = 193;
@@ -152,7 +152,7 @@ library GnosisMath {
 
     /// @dev Returns maximum of an array
     /// @param nums Numbers to look through
-    /// @return Maximum number
+    /// @return maxNum Maximum number
     function max(int[] memory nums) public pure returns (int maxNum) {
         require(nums.length > 0);
         maxNum = -2 ** 255;

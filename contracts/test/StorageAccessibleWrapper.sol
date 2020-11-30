@@ -1,4 +1,4 @@
-pragma solidity ^0.5.2;
+pragma solidity ^0.6.0;
 import "../StorageAccessible.sol";
 
 contract StorageAccessibleWrapper is StorageAccessible {

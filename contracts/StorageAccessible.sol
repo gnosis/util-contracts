@@ -1,4 +1,4 @@
-pragma solidity ^0.5.2;
+pragma solidity ^0.6.0;
 
 /// @title StorageAccessible - generic base contract that allows callers to access all internal storage.
 contract StorageAccessible {
