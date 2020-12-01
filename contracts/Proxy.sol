@@ -33,7 +33,4 @@ contract Proxy is Proxied {
         }
     }
 
-    receive() external payable {
-        revert();
-    }
 }
