@@ -32,5 +32,4 @@ contract Proxy is Proxied {
                 }
         }
     }
-
 }
