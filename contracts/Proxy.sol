@@ -18,7 +18,7 @@ contract Proxy is Proxied {
     }
 
     /// @dev Fallback function forwards all transactions and returns all received return data.
-    receive() external payable {
+    function _fallback() internal {
         address _masterCopy = masterCopy;
         assembly {
             calldatacopy(0, 0, calldatasize())
@@ -32,5 +32,21 @@ contract Proxy is Proxied {
                     return(0, returndatasize())
                 }
         }
+    }
+
+    /**
+     * @dev Fallback function that delegates calls to the masterCopy. 
+     * Runs when no other function in the contract matches the call data.
+     */
+    fallback () external payable {
+        _fallback();
+    }
+
+    /**
+     * @dev Fallback function that receives ether and delegates calls to masterCopy. 
+     * Runs when call data is empty.
+     */
+    receive () external payable {
+        _fallback();
     }
 }
