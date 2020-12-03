@@ -8,6 +8,7 @@ async function getNetworkInfo (buildPath) {
   return contracts
     // Take just the contracts with network information
     .filter(contract => {
+      if (!contract.networks) return false
       const networkIds = Object.keys(contract.networks)
       return networkIds.length > 0
     })
