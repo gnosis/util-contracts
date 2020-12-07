@@ -1,4 +1,5 @@
-pragma solidity ^0.5.2;
+// SPDX-License-Identifier: LGPL-3.0-only
+pragma solidity ^0.6.0;
 import "./Token.sol";
 import "./Math.sol";
 import "./Proxy.sol";
@@ -29,7 +30,7 @@ contract GnosisStandardToken is Token, StandardTokenData {
     /// @param to Address of token receiver
     /// @param value Number of tokens to transfer
     /// @return Was transfer successful?
-    function transfer(address to, uint value) public returns (bool) {
+    function transfer(address to, uint value) public override returns (bool) {
         if (!balances[msg.sender].safeToSub(value) || !balances[to].safeToAdd(value)) {
             return false;
         }
@@ -45,7 +46,7 @@ contract GnosisStandardToken is Token, StandardTokenData {
     /// @param to Address to where tokens are sent
     /// @param value Number of tokens to transfer
     /// @return Was transfer successful?
-    function transferFrom(address from, address to, uint value) public returns (bool) {
+    function transferFrom(address from, address to, uint value) public override returns (bool) {
         if (!balances[from].safeToSub(value) || !allowances[from][msg.sender].safeToSub(
             value
         ) || !balances[to].safeToAdd(value)) {
@@ -62,7 +63,7 @@ contract GnosisStandardToken is Token, StandardTokenData {
     /// @param spender Address of allowed account
     /// @param value Number of approved tokens
     /// @return Was approval successful?
-    function approve(address spender, uint value) public returns (bool) {
+    function approve(address spender, uint value) public override returns (bool) {
         allowances[msg.sender][spender] = value;
         emit Approval(msg.sender, spender, value);
         return true;
@@ -72,20 +73,20 @@ contract GnosisStandardToken is Token, StandardTokenData {
     /// @param owner Address of token owner
     /// @param spender Address of token spender
     /// @return Remaining allowance for spender
-    function allowance(address owner, address spender) public view returns (uint) {
+    function allowance(address owner, address spender) public override view returns (uint) {
         return allowances[owner][spender];
     }
 
     /// @dev Returns number of tokens owned by given address
     /// @param owner Address of token owner
     /// @return Balance of owner
-    function balanceOf(address owner) public view returns (uint) {
+    function balanceOf(address owner) public override view returns (uint) {
         return balances[owner];
     }
 
     /// @dev Returns total supply of tokens
     /// @return Total supply
-    function totalSupply() public view returns (uint) {
+    function totalSupply() public override view returns (uint) {
         return totalTokens;
     }
 }

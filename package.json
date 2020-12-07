@@ -46,8 +46,8 @@
     "eslint-plugin-standard": "^4.0.0",
     "prettier": "^1.15.3",
     "prettier-plugin-solidity-refactor": "^1.0.0-alpha.12",
-    "solc": "0.5.8",
-    "truffle": "^5.0.2",
+    "solc": "0.6.12",
+    "truffle": "^5.1.50",
     "truffle-assertions": "^0.9.2"
   },
   "dependencies": {
