@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 pragma solidity ^0.6.0;
 
+/// @title ViewStorageAccessible - Interface on top of StorageAccessible base class to allow simulations from view functions
 interface ViewStorageAccessible {
+    /**
+     * @dev Same as `simulateDelegatecall` on StorageAccessible. Marked as view so that it can be called from external contracts
+     * that want to run simulations for within view functions. Will revert if the invoked simulation attempt to change state.
+     */
     function simulateDelegatecall(
         address targetContract,
         bytes memory calldataPayload
