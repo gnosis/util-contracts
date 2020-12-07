@@ -54,6 +54,30 @@ contract StorageAccessible {
     }
 
     /**
+     * @dev Same as simulateDelegatecall but with view modifier (only uses static context)
+     * @param targetContract Address of the contract containing the code to execute.
+     * @param calldataPayload Calldata that should be sent to the target contract (encoded method name and arguments).
+     */
+    function simulateStaticDelegatecall(
+        address targetContract,
+        bytes memory calldataPayload
+    ) public view returns (bytes memory) {
+        bytes memory innerCall = abi.encodeWithSelector(
+            SIMULATE_DELEGATECALL_INTERNAL_SELECTOR,
+            targetContract,
+            calldataPayload
+        );
+        (, bytes memory response) = address(this).staticcall(innerCall);
+        bool innerSuccess = response[response.length - 1] == 0x01;
+        setLength(response, response.length - 1);
+        if (innerSuccess) {
+            return response;
+        } else {
+            revertWith(response);
+        }
+    }
+
+    /**
      * @dev Performs a delegetecall on a targetContract in the context of self.
      * Internally reverts execution to avoid side effects (making it static). Returns encoded result as revert message
      * concatenated with the success flag of the inner call as a last byte.
