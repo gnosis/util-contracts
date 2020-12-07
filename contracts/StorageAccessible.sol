@@ -5,7 +5,7 @@ pragma solidity ^0.6.0;
 interface ViewStorageAccessible {
     /**
      * @dev Same as `simulateDelegatecall` on StorageAccessible. Marked as view so that it can be called from external contracts
-     * that want to run simulations for within view functions. Will revert if the invoked simulation attempt to change state.
+     * that want to run simulations from within view functions. Will revert if the invoked simulation attempts to change state.
      */
     function simulateDelegatecall(
         address targetContract,
