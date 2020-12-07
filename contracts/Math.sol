@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: LGPL-3.0-only
-pragma solidity ^0.6.0;
+pragma solidity ^0.7.0;
 
 /// @title Math library - Allows calculation of logarithmic and exponential functions
 /// @author Alan Lu - <alan.lu@gnosis.pm>
@@ -87,9 +87,9 @@ library GnosisMath {
         zpow = zpow * z / ONE;
         result += 0x9c7 * zpow / ONE;
         if (shift >= 0) {
-            if (result >> (256 - shift) > 0) return (2 ** 256 - 1);
-            return result << shift;
-        } else return result >> (-shift);
+            if (result >> (uint(256) - uint(shift)) > 0) return (2 ** 256 - 1);
+            return result << uint(shift);
+        } else return result >> uint(-shift);
     }
 
     /// @dev Returns natural logarithm value of given x

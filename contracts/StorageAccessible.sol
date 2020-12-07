@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: LGPL-3.0-only
-pragma solidity ^0.6.0;
+pragma solidity ^0.7.0;
 
 /// @title StorageAccessible - generic base contract that allows callers to access all internal storage.
 contract StorageAccessible {
@@ -37,13 +37,13 @@ contract StorageAccessible {
     function simulateDelegatecall(
         address targetContract,
         bytes memory calldataPayload
-    ) public returns (bytes memory) {
+    ) public returns (bytes memory response) {
         bytes memory innerCall = abi.encodeWithSelector(
             SIMULATE_DELEGATECALL_INTERNAL_SELECTOR,
             targetContract,
             calldataPayload
         );
-        (, bytes memory response) = address(this).call(innerCall);
+        (, response) = address(this).call(innerCall);
         bool innerSuccess = response[response.length - 1] == 0x01;
         setLength(response, response.length - 1);
         if (innerSuccess) {
@@ -61,13 +61,13 @@ contract StorageAccessible {
     function simulateStaticDelegatecall(
         address targetContract,
         bytes memory calldataPayload
-    ) public view returns (bytes memory) {
+    ) public view returns (bytes memory response) {
         bytes memory innerCall = abi.encodeWithSelector(
             SIMULATE_DELEGATECALL_INTERNAL_SELECTOR,
             targetContract,
             calldataPayload
         );
-        (, bytes memory response) = address(this).staticcall(innerCall);
+        (, response) = address(this).staticcall(innerCall);
         bool innerSuccess = response[response.length - 1] == 0x01;
         setLength(response, response.length - 1);
         if (innerSuccess) {
@@ -87,8 +87,9 @@ contract StorageAccessible {
     function simulateDelegatecallInternal(
         address targetContract,
         bytes memory calldataPayload
-    ) public returns (bytes memory) {
-        (bool success, bytes memory response) = targetContract.delegatecall(
+    ) public returns (bytes memory response) {
+        bool success;
+        (success, response) = targetContract.delegatecall(
             calldataPayload
         );
         revertWith(abi.encodePacked(response, success));

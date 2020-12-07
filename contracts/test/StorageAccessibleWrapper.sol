@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: LGPL-3.0-only
-pragma solidity ^0.6.0;
+pragma solidity ^0.7.0;
 import "../StorageAccessible.sol";
 
 contract StorageAccessibleWrapper is StorageAccessible {
@@ -22,7 +22,7 @@ contract StorageAccessibleWrapper is StorageAccessible {
     mapping(uint256 => uint256) qux;
     FooBar foobar;
 
-    constructor() public {}
+    constructor() {}
 
     function setFoo(uint256 foo_) public {
         foo = foo_;
