@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 pragma solidity ^0.6.0;
 
+interface ViewStorageAccessible {
+    function simulateDelegatecall(
+        address targetContract,
+        bytes memory calldataPayload
+    ) external view returns (bytes memory);
+}
+
 /// @title StorageAccessible - generic base contract that allows callers to access all internal storage.
 contract StorageAccessible {
     bytes4 public constant SIMULATE_DELEGATECALL_INTERNAL_SELECTOR = bytes4(
@@ -44,30 +51,6 @@ contract StorageAccessible {
             calldataPayload
         );
         (, bytes memory response) = address(this).call(innerCall);
-        bool innerSuccess = response[response.length - 1] == 0x01;
-        setLength(response, response.length - 1);
-        if (innerSuccess) {
-            return response;
-        } else {
-            revertWith(response);
-        }
-    }
-
-    /**
-     * @dev Same as simulateDelegatecall but with view modifier (only uses static context)
-     * @param targetContract Address of the contract containing the code to execute.
-     * @param calldataPayload Calldata that should be sent to the target contract (encoded method name and arguments).
-     */
-    function simulateStaticDelegatecall(
-        address targetContract,
-        bytes memory calldataPayload
-    ) public view returns (bytes memory) {
-        bytes memory innerCall = abi.encodeWithSelector(
-            SIMULATE_DELEGATECALL_INTERNAL_SELECTOR,
-            targetContract,
-            calldataPayload
-        );
-        (, bytes memory response) = address(this).staticcall(innerCall);
         bool innerSuccess = response[response.length - 1] == 0x01;
         setLength(response, response.length - 1);
         if (innerSuccess) {
