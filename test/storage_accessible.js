@@ -104,8 +104,9 @@ contract('StorageAccessible', () => {
       await instance.setFoo(42)
 
       const reader = await ExternalStorageReader.new()
+      const getFooCall = reader.contract.methods.getFoo().encodeABI()
       // invokeStaticDelegatecall is marked as view
-      const result = await reader.invokeStaticDelegatecall(instance.address)
+      const result = await reader.invokeStaticDelegatecall(instance.address, getFooCall)
       assert.equal(42, result)
     })
 
@@ -115,7 +116,7 @@ contract('StorageAccessible', () => {
 
       const reader = await ExternalStorageReader.new()
       const replaceFooCall = reader.contract.methods.setAndGetFoo(69).encodeABI()
-      truffleAssert.reverts(instance.simulateStaticDelegatecall(reader.address, replaceFooCall))
+      truffleAssert.reverts(reader.invokeStaticDelegatecall(reader.address, replaceFooCall))
     })
   })
 })

@@ -1,6 +1,18 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 pragma solidity ^0.7.0;
 
+/// @title ViewStorageAccessible - Interface on top of StorageAccessible base class to allow simulations from view functions
+interface ViewStorageAccessible {
+    /**
+     * @dev Same as `simulateDelegatecall` on StorageAccessible. Marked as view so that it can be called from external contracts
+     * that want to run simulations from within view functions. Will revert if the invoked simulation attempts to change state.
+     */
+    function simulateDelegatecall(
+        address targetContract,
+        bytes memory calldataPayload
+    ) external view returns (bytes memory);
+}
+
 /// @title StorageAccessible - generic base contract that allows callers to access all internal storage.
 contract StorageAccessible {
     bytes4 public constant SIMULATE_DELEGATECALL_INTERNAL_SELECTOR = bytes4(
@@ -44,30 +56,6 @@ contract StorageAccessible {
             calldataPayload
         );
         (, response) = address(this).call(innerCall);
-        bool innerSuccess = response[response.length - 1] == 0x01;
-        setLength(response, response.length - 1);
-        if (innerSuccess) {
-            return response;
-        } else {
-            revertWith(response);
-        }
-    }
-
-    /**
-     * @dev Same as simulateDelegatecall but with view modifier (only uses static context)
-     * @param targetContract Address of the contract containing the code to execute.
-     * @param calldataPayload Calldata that should be sent to the target contract (encoded method name and arguments).
-     */
-    function simulateStaticDelegatecall(
-        address targetContract,
-        bytes memory calldataPayload
-    ) public view returns (bytes memory response) {
-        bytes memory innerCall = abi.encodeWithSelector(
-            SIMULATE_DELEGATECALL_INTERNAL_SELECTOR,
-            targetContract,
-            calldataPayload
-        );
-        (, response) = address(this).staticcall(innerCall);
         bool innerSuccess = response[response.length - 1] == 0x01;
         setLength(response, response.length - 1);
         if (innerSuccess) {
