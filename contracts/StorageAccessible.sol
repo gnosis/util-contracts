@@ -11,14 +11,18 @@ interface ViewStorageAccessible {
         address targetContract,
         bytes memory calldataPayload
     ) external view returns (bytes memory);
+
+    /**
+     * @dev Same as `getStorageAt` on StorageAccessible. This method allows reading aribtrary ranges of storage.
+     */
+    function getStorageAt(uint256 offset, uint256 length)
+        external
+        view
+        returns (bytes memory);
 }
 
 /// @title StorageAccessible - generic base contract that allows callers to access all internal storage.
 contract StorageAccessible {
-    bytes4 public constant SIMULATE_DELEGATECALL_INTERNAL_SELECTOR = bytes4(
-        keccak256("simulateDelegatecallInternal(address,bytes)")
-    );
-
     /**
      * @dev Reads `length` bytes of storage in the currents contract
      * @param offset - the offset in the current contract's storage in words to start reading from
@@ -26,7 +30,7 @@ contract StorageAccessible {
      * @return the bytes that were read.
      */
     function getStorageAt(uint256 offset, uint256 length)
-        public
+        external
         view
         returns (bytes memory)
     {
@@ -51,7 +55,7 @@ contract StorageAccessible {
         bytes memory calldataPayload
     ) public returns (bytes memory response) {
         bytes memory innerCall = abi.encodeWithSelector(
-            SIMULATE_DELEGATECALL_INTERNAL_SELECTOR,
+            this.simulateDelegatecallInternal.selector,
             targetContract,
             calldataPayload
         );
@@ -75,7 +79,7 @@ contract StorageAccessible {
     function simulateDelegatecallInternal(
         address targetContract,
         bytes memory calldataPayload
-    ) public returns (bytes memory response) {
+    ) external returns (bytes memory response) {
         bool success;
         (success, response) = targetContract.delegatecall(
             calldataPayload
@@ -83,13 +87,13 @@ contract StorageAccessible {
         revertWith(abi.encodePacked(response, success));
     }
 
-    function revertWith(bytes memory response) public pure {
+    function revertWith(bytes memory response) internal pure {
         assembly {
             revert(add(response, 0x20), mload(response))
         }
     }
 
-    function setLength(bytes memory buffer, uint256 length) public pure {
+    function setLength(bytes memory buffer, uint256 length) internal pure {
         assembly {
             mstore(buffer, length)
         }
