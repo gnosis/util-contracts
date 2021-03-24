@@ -52,20 +52,40 @@ contract StorageAccessible {
      */
     function simulateDelegatecall(
         address targetContract,
-        bytes memory calldataPayload
+        bytes calldata calldataPayload
     ) public returns (bytes memory response) {
-        bytes memory innerCall = abi.encodeWithSelector(
+        bytes memory internalCalldata = abi.encodeWithSelector(
             this.simulateDelegatecallInternal.selector,
             targetContract,
             calldataPayload
         );
-        (, response) = address(this).call(innerCall);
-        bool innerSuccess = response[response.length - 1] == 0x01;
-        setLength(response, response.length - 1);
-        if (innerSuccess) {
-            return response;
-        } else {
-            revertWith(response);
+
+        assembly {
+            pop(call(
+                gas(),
+                address(),
+                0,
+                add(internalCalldata, 0x20),
+                mload(internalCalldata),
+                // store the `success` value at memory address 0x00 (reserved
+                // Solidity scratch space).
+                0x00,
+                0x20
+            ))
+
+            let responseSize := sub(returndatasize(), 0x20)
+
+            // Allocate the response vector, make sure to increment the free
+            // memory pointer accordingly (in case this method is called as an
+            // internal function).
+            response := mload(0x40)
+            mstore(0x40, add(response, responseSize))
+
+            returndatacopy(response, 0x20, responseSize)
+
+            if iszero(mload(0x00)) {
+                revert(add(response, 0x20), mload(response))
+            }
         }
     }
 
@@ -79,23 +99,21 @@ contract StorageAccessible {
     function simulateDelegatecallInternal(
         address targetContract,
         bytes memory calldataPayload
-    ) external returns (bytes memory response) {
-        bool success;
-        (success, response) = targetContract.delegatecall(
-            calldataPayload
-        );
-        revertWith(abi.encodePacked(response, success));
-    }
-
-    function revertWith(bytes memory response) internal pure {
+    ) external {
         assembly {
-            revert(add(response, 0x20), mload(response))
-        }
-    }
+            let success := delegatecall(
+                gas(),
+                targetContract,
+                add(calldataPayload, 0x20),
+                mload(calldataPayload),
+                0,
+                0
+            )
 
-    function setLength(bytes memory buffer, uint256 length) internal pure {
-        assembly {
-            mstore(buffer, length)
+            mstore(0x00, success)
+            mstore(0x20, returndatasize())
+            returndatacopy(0x40, 0, returndatasize())
+            revert(0, add(returndatasize(), 0x40))
         }
     }
 }
