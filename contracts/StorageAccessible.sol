@@ -54,33 +54,40 @@ contract StorageAccessible {
         address targetContract,
         bytes calldata calldataPayload
     ) public returns (bytes memory response) {
-        bytes memory internalCalldata = abi.encodeWithSelector(
-            this.simulateDelegatecallInternal.selector,
-            targetContract,
-            calldataPayload
-        );
-
+        bytes4 selector = this.simulateDelegatecallInternal.selector;
         assembly {
+            let internalCalldata := mload(0x40)
+            mstore(internalCalldata, selector)
+            // Abuse the fact that both this and the internal methods have the
+            // same signature, and differ only in symbol name (and therefore,
+            // selector) and copy calldata directly. This saves us approximately
+            // 250 bytes of code and 300 gas at runtime over the
+            // `abi.encodeWithSelector` builtin.
+            calldatacopy(
+                add(internalCalldata, 0x04),
+                0x04,
+                sub(calldatasize(), 0x04)
+            )
+
             pop(call(
                 gas(),
                 address(),
                 0,
-                add(internalCalldata, 0x20),
-                mload(internalCalldata),
-                // store the `success` value at memory address 0x00 (reserved
+                internalCalldata,
+                calldatasize(),
+                // Store the `success` value at memory address 0x00 (reserved
                 // Solidity scratch space).
                 0x00,
                 0x20
             ))
 
-            let responseSize := sub(returndatasize(), 0x20)
 
-            // Allocate the response vector, make sure to increment the free
-            // memory pointer accordingly (in case this method is called as an
-            // internal function).
+            // Allocate and copy the response bytes, making sure to increment
+            // the free memory pointer accordingly (in case this method is
+            // called as an internal function).
+            let responseSize := sub(returndatasize(), 0x20)
             response := mload(0x40)
             mstore(0x40, add(response, responseSize))
-
             returndatacopy(response, 0x20, responseSize)
 
             if iszero(mload(0x00)) {
