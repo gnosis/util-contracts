@@ -54,10 +54,10 @@ contract StorageAccessible {
         address targetContract,
         bytes calldata calldataPayload
     ) public returns (bytes memory response) {
-        bytes4 selector = this.simulateDelegatecallInternal.selector;
         assembly {
             let internalCalldata := mload(0x40)
-            mstore(internalCalldata, selector)
+            // Store `simulateDelegatecallInternal.selector`.
+            mstore(internalCalldata, "\x43\x21\x8e\x19")
             // Abuse the fact that both this and the internal methods have the
             // same signature, and differ only in symbol name (and therefore,
             // selector) and copy calldata directly. This saves us approximately
@@ -69,14 +69,21 @@ contract StorageAccessible {
                 sub(calldatasize(), 0x04)
             )
 
+            // `pop` is required here by the compiler, as top level expressions
+            // can't have return values in inline assembly. `call` typically
+            // returns a 0 or 1 value indicated whether or not it reverted, but
+            // since we know it will always revert, we can safely ignore it.
             pop(call(
                 gas(),
                 address(),
                 0,
                 internalCalldata,
                 calldatasize(),
-                // Store the `success` value at memory address 0x00 (reserved
-                // Solidity scratch space).
+                // The `simulateDelegatecallInternal` call always reverts, and
+                // instead encodes whether or not it was successful in the return
+                // data. The first 32-byte word of the return data contains the
+                // `success` value, so write it to memory address 0x00 (which is
+                // reserved Solidity scratch space and OK to use).
                 0x00,
                 0x20
             ))
@@ -84,7 +91,9 @@ contract StorageAccessible {
 
             // Allocate and copy the response bytes, making sure to increment
             // the free memory pointer accordingly (in case this method is
-            // called as an internal function).
+            // called as an internal function). The remaining `returndata[0x20:]`
+            // contains the ABI encoded response bytes, so we can just write it
+            // as is to memory.
             let responseSize := sub(returndatasize(), 0x20)
             response := mload(0x40)
             mstore(0x40, add(response, responseSize))
@@ -98,8 +107,12 @@ contract StorageAccessible {
 
     /**
      * @dev Performs a delegetecall on a targetContract in the context of self.
-     * Internally reverts execution to avoid side effects (making it static). Returns encoded result as revert message
-     * concatenated with the success flag of the inner call as a last byte.
+     * Internally reverts execution to avoid side effects (making it static).
+     *
+     * This method reverts with data equal to `abi.encode(bool(success), bytes(response))`.
+     * Specifically, the `returndata` after a call to this method will be:
+     * `success:bool || response.length:uint256 || response:bytes`.
+     *
      * @param targetContract Address of the contract containing the code to execute.
      * @param calldataPayload Calldata that should be sent to the target contract (encoded method name and arguments).
      */
