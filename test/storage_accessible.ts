@@ -68,7 +68,7 @@ describe("StorageAccessible", () => {
     });
   });
 
-  describe("simulateDelegatecall", async () => {
+  describe("simulate", async () => {
     it("can invoke a function in the context of a previously deployed contract", async () => {
       const instance = await StorageAccessibleWrapper.deploy();
       await instance.setFoo(42);
@@ -76,7 +76,7 @@ describe("StorageAccessible", () => {
       // Deploy and use reader contract to access foo
       const reader = await ExternalStorageReader.deploy();
       const getFooCall = reader.interface.encodeFunctionData("getFoo");
-      const result = await instance.callStatic.simulateDelegatecall(reader.address, getFooCall);
+      const result = await instance.callStatic.simulate(reader.address, getFooCall);
       expect(fromHex(result)).to.equal(42);
     });
 
@@ -87,12 +87,12 @@ describe("StorageAccessible", () => {
       // Deploy and use reader contract to simulate setting foo
       const reader = await ExternalStorageReader.deploy();
       const replaceFooCall = reader.interface.encodeFunctionData("setAndGetFoo", [69]);
-      let result = await instance.callStatic.simulateDelegatecall(reader.address, replaceFooCall);
+      let result = await instance.callStatic.simulate(reader.address, replaceFooCall);
       expect(fromHex(result)).to.equal(69);
 
       // Make sure foo is not actually changed
       const getFooCall = reader.interface.encodeFunctionData("getFoo");
-      result = await instance.callStatic.simulateDelegatecall(reader.address, getFooCall);
+      result = await instance.callStatic.simulate(reader.address, getFooCall);
       expect(fromHex(result)).to.equal(42);
     });
 
@@ -101,7 +101,7 @@ describe("StorageAccessible", () => {
 
       const reader = await ExternalStorageReader.deploy();
       const doRevertCall = reader.interface.encodeFunctionData("doRevert");
-      await expect(instance.callStatic.simulateDelegatecall(reader.address, doRevertCall)).to.be
+      await expect(instance.callStatic.simulate(reader.address, doRevertCall)).to.be
         .reverted;
     });
 
