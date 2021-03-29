@@ -1,20 +1,20 @@
 module.exports = {
-  extends: 'standard',
-  plugins: [],
-  rules: {
-    strict: 0,
-    'arrow-parens': [2, 'as-needed'],
-    'no-undef': "error",
-  },
+  root: true,
   env: {
-    es6: true,
+    es2020: true,
     node: true,
-    mocha: true,
   },
-  globals: {
-    artifacts: false,
-    contract: false,
-    assert: false,
-    web3: false,
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: 2020,
   },
-}
+  plugins: ["@typescript-eslint"],
+  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  ignorePatterns: [
+    "build/",
+    "node_modules/",
+    // ESLint ignores hidden files by default, add negative ignore patterns so
+    // that they get linted as well.
+    "!.prettierrc.js",
+  ],
+};
