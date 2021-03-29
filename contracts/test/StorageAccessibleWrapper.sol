@@ -73,7 +73,7 @@ contract ExternalStorageReader {
     function invokeDoRevertViaStorageAccessible(StorageAccessible target)
         public
     {
-        target.simulateDelegatecall(
+        target.simulate(
             address(this),
             abi.encodeWithSignature("doRevert()")
         );
@@ -84,7 +84,7 @@ contract ExternalStorageReader {
         bytes calldata encodedCall
     ) public view returns (uint256) {
         uint256 result = abi.decode(
-            target.simulateDelegatecall(address(this), encodedCall),
+            target.simulate(address(this), encodedCall),
             (uint256)
         );
         return result;

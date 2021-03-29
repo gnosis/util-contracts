@@ -4,10 +4,10 @@ pragma solidity ^0.7.0;
 /// @title ViewStorageAccessible - Interface on top of StorageAccessible base class to allow simulations from view functions
 interface ViewStorageAccessible {
     /**
-     * @dev Same as `simulateDelegatecall` on StorageAccessible. Marked as view so that it can be called from external contracts
+     * @dev Same as `simulate` on StorageAccessible. Marked as view so that it can be called from external contracts
      * that want to run simulations from within view functions. Will revert if the invoked simulation attempts to change state.
      */
-    function simulateDelegatecall(
+    function simulate(
         address targetContract,
         bytes memory calldataPayload
     ) external view returns (bytes memory);
@@ -50,14 +50,14 @@ contract StorageAccessible {
      * @param targetContract Address of the contract containing the code to execute.
      * @param calldataPayload Calldata that should be sent to the target contract (encoded method name and arguments).
      */
-    function simulateDelegatecall(
+    function simulate(
         address targetContract,
         bytes calldata calldataPayload
     ) public returns (bytes memory response) {
         assembly {
             let internalCalldata := mload(0x40)
-            // Store `simulateDelegatecallInternal.selector`.
-            mstore(internalCalldata, "\x43\x21\x8e\x19")
+            // Store `simulateAndRevert.selector`.
+            mstore(internalCalldata, "\xb4\xfa\xba\x09")
             // Abuse the fact that both this and the internal methods have the
             // same signature, and differ only in symbol name (and therefore,
             // selector) and copy calldata directly. This saves us approximately
@@ -79,9 +79,9 @@ contract StorageAccessible {
                 0,
                 internalCalldata,
                 calldatasize(),
-                // The `simulateDelegatecallInternal` call always reverts, and
-                // instead encodes whether or not it was successful in the return
-                // data. The first 32-byte word of the return data contains the
+                // The `simulateAndRevert` call always reverts, and instead
+                // encodes whether or not it was successful in the return data.
+                // The first 32-byte word of the return data contains the
                 // `success` value, so write it to memory address 0x00 (which is
                 // reserved Solidity scratch space and OK to use).
                 0x00,
@@ -116,7 +116,7 @@ contract StorageAccessible {
      * @param targetContract Address of the contract containing the code to execute.
      * @param calldataPayload Calldata that should be sent to the target contract (encoded method name and arguments).
      */
-    function simulateDelegatecallInternal(
+    function simulateAndRevert(
         address targetContract,
         bytes memory calldataPayload
     ) external {
