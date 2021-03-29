@@ -11,6 +11,7 @@ jobs:
       matrix:
         node-version: [14.x, 15.x]
         os: [ubuntu-latest]
+        solc: ["0.7.6", "0.8.3"]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -26,4 +27,4 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-yarn-
       - run: yarn --frozen-lockfile
-      - run: yarn test
+      - run: SOLC_VERSION=${{ matrix.solc }} yarn test

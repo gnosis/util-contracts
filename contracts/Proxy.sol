@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: LGPL-3.0-only
-pragma solidity ^0.7.0;
+pragma solidity >=0.7.0 <0.9.0;
 
 /// @title Proxied - indicates that a contract will be proxied. Also defines storage requirements for Proxy.
 /// @author Alan Lu - <alan@gnosis.pm>

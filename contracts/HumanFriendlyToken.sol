@@ -2,7 +2,8 @@
 
 /// Implements ERC 20 Token standard including extra accessors for human readability.
 /// See: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md
-pragma solidity ^0.7.0;
+pragma solidity >=0.7.0 <0.9.0;
+
 import "./Token.sol";
 
 /// @title Abstract human-friendly token contract - Functions to be implemented by token contracts

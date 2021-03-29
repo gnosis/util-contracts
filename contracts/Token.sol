@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 /// Implements ERC 20 Token standard: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md
-pragma solidity ^0.7.0;
+pragma solidity >=0.7.0 <0.9.0;
 
 /// @title Abstract token contract - Functions to be implemented by token contracts
 abstract contract Token {

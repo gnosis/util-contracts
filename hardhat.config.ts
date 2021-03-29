@@ -1,9 +1,14 @@
 import "@nomiclabs/hardhat-waffle";
 
+import dotenv from "dotenv";
+
+dotenv.config();
+const { SOLC_VERSION } = process.env;
+
 export default {
   paths: {
     artifacts: "build/artifacts",
-    cache: "build/cache"
+    cache: "build/cache",
   },
-  solidity: "0.7.6"
+  solidity: SOLC_VERSION ?? "0.8.3",
 };

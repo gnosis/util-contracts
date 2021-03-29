@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: LGPL-3.0-only
-pragma solidity ^0.7.0;
+pragma solidity >=0.7.0 <0.9.0;
+
 import "./GnosisStandardToken.sol";
 
 /// @title Token contract - Token exchanging Ether 1:1
@@ -36,7 +37,7 @@ contract EtherToken is GnosisStandardToken {
         // Balance covers value
         balances[msg.sender] = balances[msg.sender].sub(value);
         totalTokens = totalTokens.sub(value);
-        msg.sender.transfer(value);
+        payable(msg.sender).transfer(value);
         emit Withdrawal(msg.sender, value);
     }
 }
