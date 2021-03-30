@@ -67,7 +67,7 @@ describe("StorageSimulate", () => {
       const mock = await MockStorageSimulation.deploy();
 
       const targetContract = `0x${"2a".repeat(20)}`;
-      for (const length of [0, 10, 28, 32, 42]) {
+      for (const length of [0, 1, 10, 28, 32, 42]) {
         const calldataPayload = [...Array(length)].map((_, i) => i);
         await mockSimulateAndRevert(mock, {
           targetContract,
@@ -119,7 +119,7 @@ describe("StorageSimulate", () => {
         kind: MockKind.Return,
         targetContract: ethers.constants.AddressZero,
         calldataPayload: "0x",
-        response: ethers.utils.defaultAbiCoder.encode(["bool", "uint256"], [true, 1_000_000]),
+        response: ethers.utils.defaultAbiCoder.encode(["bool", "uint256"], [true, 1]),
       });
 
       await expect(instance.callStatic.simulate(mock.address, ethers.constants.AddressZero, "0x"))

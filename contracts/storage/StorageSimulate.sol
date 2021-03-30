@@ -9,8 +9,6 @@ import "./StorageSimulation.sol";
  * @dev Convenience methods for interacting with {@link StorageSimulation} contracts.
  */
 library StorageSimulate {
-    using StorageSimulate for StorageSimulation;
-
     /**
      * @dev Precomputed selector of {@link StorageSimulation.simulateAndRevert}.
      *
@@ -126,7 +124,7 @@ library StorageSimulate {
             // size. This protects us from calling into a contract that doesn't
             // implement `StorageSimulation` returning unexpected data and causing
             // `response` to reference bytes beyond our allocation.
-            if gt(mload(response), responseSize) {
+            if gt(mload(response), sub(responseSize, 0x20)) {
                 revert(0, 0)
             }
 
