@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 pragma solidity >=0.7.0 <0.9.0;
 
+import "../storage/StorageAccessible.sol";
 import "../storage/ViewStorageAccessible.sol";
 
 contract StorageAccessibleWrapper is StorageAccessible {
@@ -68,7 +69,7 @@ contract ExternalStorageReader {
     }
 
     function doRevert() public pure {
-        revert();
+        revert("test revert");
     }
 
     function invokeDoRevertViaStorageAccessible(StorageAccessible target)
@@ -89,5 +90,67 @@ contract ExternalStorageReader {
             (uint256)
         );
         return result;
+    }
+}
+
+contract StorageSimulateWrapper {
+    using StorageSimulate for StorageSimulation;
+
+    function simulate(
+        StorageSimulation context,
+        address targetContract,
+        bytes memory calldataPayload
+    ) external returns (bytes memory) {
+        return context.simulate(targetContract, calldataPayload);
+    }
+
+    function simulateInvalidMemory() external {
+        bytes memory invalidBytes;
+        assembly {
+            // This is technically undefined behaviour, since the Solidity
+            // compiler can use the scratch space in between statements, but
+            // this lets us test the path where we check that the memory address
+            // gives us enough space for in-place encoding ¯\_(ツ)_/¯.
+            mstore(0, 0)
+            invalidBytes := 0
+        }
+        StorageSimulation(address(0)).simulate(address(0), invalidBytes);
+    }
+}
+
+contract MockStorageSimulation {
+    enum Kind {None, Return, Revert}
+    struct Mock {
+        Kind kind;
+        bytes response;
+    }
+
+    mapping(bytes => Mock) private mocks;
+
+    function mockCall(
+        Kind kind,
+        bytes calldata input,
+        bytes calldata response
+    ) external {
+        mocks[input] = Mock({kind: kind, response: response});
+    }
+
+    function simulateAndRevert(address, bytes calldata)
+        external
+        view
+    {
+        Mock memory mock = mocks[msg.data];
+        assert(mock.kind != Kind.None);
+
+        bytes memory response = mock.response;
+        if (mock.kind == Kind.Return) {
+            assembly {
+                return(add(response, 0x20), mload(response))
+            }
+        } else {
+            assembly {
+                revert(add(response, 0x20), mload(response))
+            }
+        }
     }
 }

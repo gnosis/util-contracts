@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 pragma solidity >=0.7.0 <0.9.0;
 
-import "./StorageAccessible.sol";
-
 /**
- * @title ViewStorageAccessible
+ * @title View Storage Accessible Interface
  * @author Gnosis Developers
- * @dev Interface on top of StorageAccessible base class to allow simulations from view functions
+ * @dev Interface on top of {@link StorageAccessible} base class to allow
+ * simulations from view functions
  */
 interface ViewStorageAccessible {
     /**

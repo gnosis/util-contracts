@@ -49,7 +49,9 @@ describe("StorageAccessible", () => {
 
       const reader = await ExternalStorageReader.deploy();
       const doRevertCall = reader.interface.encodeFunctionData("doRevert");
-      await expect(instance.callStatic.simulate(reader.address, doRevertCall)).to.be.reverted;
+      await expect(instance.callStatic.simulate(reader.address, doRevertCall)).to.be.revertedWith(
+        "test revert",
+      );
     });
 
     it("allows detection of reverts when invoked from other smart contract", async () => {
