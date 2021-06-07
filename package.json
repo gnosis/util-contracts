@@ -40,7 +40,7 @@
     "ethers": "^5.1.2",
     "hardhat": "^2.2.0",
     "prettier": "^2.2.1",
-    "prettier-plugin-solidity": "^1.0.0-beta.9",
+    "prettier-plugin-solidity": "^1.0.0-beta.12",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4"
   }
