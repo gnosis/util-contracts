@@ -38,7 +38,7 @@
     "eslint": "^7.24.0",
     "ethereum-waffle": "^3.3.0",
     "ethers": "^5.1.2",
-    "hardhat": "^2.2.0",
+    "hardhat": "^2.9.1",
     "prettier": "^2.2.1",
     "prettier-plugin-solidity": "^1.0.0-beta.9",
     "ts-node": "^9.1.1",
