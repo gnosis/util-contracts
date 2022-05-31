@@ -11,7 +11,7 @@ import "./StorageSimulation.sol";
  */
 abstract contract StorageAccessible is StorageReadable, StorageSimulation {
     /**
-     * @dev Simulates a delegete call to a target contract in the context of self.
+     * @dev Simulates a delegate call to a target contract in the context of self.
      *
      * Internally reverts execution to avoid side effects (making it static).
      * Catches revert and returns encoded result as bytes.
